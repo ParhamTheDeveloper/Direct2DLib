@@ -6,14 +6,14 @@
 
 #ifdef _DEBUG
 	#define D2DLIB_DEBUG 1
-#elif
+#else
 	#define D2DLIB_RELEASE 1
 #endif // _DEBUG
 
 #ifdef _M_X64
 	#define D2DLIB_X64 1
 	#define D2DLIB_64BIT 1
-#elif
+#else
 	#define D2DLIB_X32 1
 	#define D2DLIB_32BIT 1
 #endif // _M_X64
@@ -31,7 +31,7 @@
 			#define D2DLIB_WIN7_10
 			#define D2DLIB_WIN8_10
 			#define D2DLIB_WIN10
-		#elif
+		#else
 			#define D2DLIB_WIN7_8
 			#define D2DLIB_WIN_8	
 		#endif // _WIN32_WINNT_WIN10

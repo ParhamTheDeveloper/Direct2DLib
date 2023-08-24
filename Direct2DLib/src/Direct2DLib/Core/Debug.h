@@ -129,16 +129,45 @@ namespace D2DLib
 
 	namespace Configuration
 	{
-		static constexpr const bool IsOnDebugMode = D2DLIB_DEBUG;
-		static constexpr const bool IsOnReleaseMode = !D2DLIB_DEBUG;
+		#ifdef D2DLIB_DEBUG
+			static constexpr const bool IsOnDebugMode = D2DLIB_DEBUG;
+		#else
+			static constexpr const bool IsOnDebugMode = 0;
+		#endif // D2DLIB_DEBUG
+
+		#ifdef D2DLIB_RELEASE
+			static constexpr const bool IsOnReleaseMode = D2DLIB_RELEASE;
+		#else
+			static constexpr const bool IsOnReleaseMode = 0;
+		#endif // D2DLIB_RELEASE
 	}
 
 	namespace Platform
 	{
-		static constexpr const bool IsOn64BitMode = D2DLIB_64BIT;
-		static constexpr const bool IsOn32BitMode = !D2DLIB_64BIT; // D2DLIB_32BIT
-		static constexpr const bool IsOnX64Mode = D2DLIB_X64;
-		static constexpr const bool IsOnX32Mode = !D2DLIB_X64; // D2DLIB_X32
+		#ifdef D2DLIB_64BIT
+			static constexpr const bool IsOn64BitMode = D2DLIB_64BIT;
+		#else
+			static constexpr const bool IsOn64BitMode = 0;
+		#endif // D2DLIB_64BIT
+
+		#ifdef D2DLIB_32BIT
+			static constexpr const bool IsOn32BitMode = D2DLIB_32BIT;
+		#else
+			static constexpr const bool IsOn32BitMode = 0;
+		#endif // D2DLIB_32BIT
+
+		#if D2DLIB_X64
+			static constexpr const bool IsOnX64Mode = D2DLIB_X64;
+		#else
+			static constexpr const bool IsOnX64Mode = 0;
+		#endif // D2DLIB_X64
+
+		#ifdef D2DLIB_X32
+			static constexpr const bool IsOnX32Mode = D2DLIB_X32;
+		#else
+			static constexpr const bool IsOnX32Mode = 0;
+		#endif // D2DLIB_X32
+
 		static constexpr const bool IsWin32 = D2DLIB_WIN32;
 		static constexpr const bool IsWin64 = !D2DLIB_WIN32; // D2DLIB_WIN64
 	}

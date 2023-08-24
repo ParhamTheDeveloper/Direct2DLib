@@ -156,7 +156,7 @@ public:
 private:
     ShapeStyle m_LightStyle;
     Vector<ShapeStyle> m_Rectangles;
-    bool m_IsLightOn = false;
+    bool m_IsLightOn = true;
     bool m_IsLightFollowing = true;
     Vector2 m_MousePos;
     Camera m_Camera;

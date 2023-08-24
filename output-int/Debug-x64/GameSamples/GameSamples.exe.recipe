@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\dev\cpp\Direct2DLib-master\output\Debug-x64\GameSamples\GameSamples.exe</FullPath>
+      <FullPath>C:\dev\cpp\Direct2DLib\output\Debug-x64\GameSamples\GameSamples.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

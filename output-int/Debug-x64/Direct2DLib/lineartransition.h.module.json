@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "C:\\dev\\cpp\\Direct2DLib\\output-int\\Debug-x64\\Direct2DLib\\LinearTransition.h.obj",
+            "outputs": [
+                "C:\\dev\\cpp\\Direct2DLib\\output\\Debug-x64\\Direct2DLib\\Direct2DLib.pdb",
+                "C:\\dev\\cpp\\Direct2DLib\\output-int\\Debug-x64\\Direct2DLib\\",
+                "C:\\dev\\cpp\\Direct2DLib\\output-int\\Debug-x64\\Direct2DLib\\LinearTransition.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "src\\Direct2DLib\\Transitions\\LinearTransition.h",
+                    "source-path": "c:\\dev\\cpp\\direct2dlib\\direct2dlib\\src\\direct2dlib\\transitions\\lineartransition.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}

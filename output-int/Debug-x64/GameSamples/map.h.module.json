@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "C:\\dev\\cpp\\Direct2DLib\\output-int\\Debug-x64\\GameSamples\\Map.h.obj",
+            "outputs": [
+                "C:\\dev\\cpp\\Direct2DLib\\output-int\\Debug-x64\\GameSamples\\vc143.pdb",
+                "C:\\dev\\cpp\\Direct2DLib\\output-int\\Debug-x64\\GameSamples\\",
+                "C:\\dev\\cpp\\Direct2DLib\\output-int\\Debug-x64\\GameSamples\\Map.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "src\\Map.h",
+                    "source-path": "c:\\dev\\cpp\\direct2dlib\\gamesamples\\src\\map.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}

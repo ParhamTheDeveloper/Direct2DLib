@@ -1,0 +1,10 @@
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Core\Graphics.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\Graphics.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Core\Texture.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\Texture.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Core\Window.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\Window.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Renderer\Camera.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\Camera.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Renderer\Renderer.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\Renderer.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Renderer\ResourceManager.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\ResourceManager.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Transitions\InterpolatorTransition.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\InterpolatorTransition.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Transitions\Transition.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\Transition.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Transitions\TransitionManager.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\TransitionManager.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\pch.cpp;C:\dev\cpp\Direct2DLib\output-int\Release-x86\Direct2DLib\pch.obj

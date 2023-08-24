@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{00adeb28-cee3-41ab-8434-6d55cb75b95f}</ProjectGuid>
+    <RootNamespace>Direct2DLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)output\$(Configuration)-$(PlatformTarget)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)output-int\$(Configuration)-$(PlatformTarget)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)output\$(Configuration)-$(PlatformTarget)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)output-int\$(Configuration)-$(PlatformTarget)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)output\$(Configuration)-$(PlatformTarget)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)output-int\$(Configuration)-$(PlatformTarget)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)output\$(Configuration)-$(PlatformTarget)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)output-int\$(Configuration)-$(PlatformTarget)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Direct2DLib\src;</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Direct2DLib\src;</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Direct2DLib\src;</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Direct2DLib\src;</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Direct2DLib\Core\Application.cpp" />
+    <ClCompile Include="src\Direct2DLib\Core\Debug.cpp" />
+    <ClCompile Include="src\Direct2DLib\Core\Graphics.cpp" />
+    <ClCompile Include="src\Direct2DLib\Math\Math.cpp" />
+    <ClCompile Include="src\Direct2DLib\Core\Texture.cpp" />
+    <ClCompile Include="src\Direct2DLib\Math\Vector2.cpp" />
+    <ClCompile Include="src\Direct2DLib\Core\Window.cpp" />
+    <ClCompile Include="src\Direct2DLib\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Direct2DLib\Renderer\Light.cpp" />
+    <ClCompile Include="src\Direct2DLib\Renderer\Ray.cpp" />
+    <ClCompile Include="src\Direct2DLib\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Direct2DLib\Renderer\RendererGlobal.cpp" />
+    <ClCompile Include="src\Direct2DLib\Renderer\ResourceManager.cpp" />
+    <ClCompile Include="src\Direct2DLib\Renderer\ResourceManagerGlobal.cpp" />
+    <ClCompile Include="src\Direct2DLib\Transitions\ColorTransition.cpp" />
+    <ClCompile Include="src\Direct2DLib\Transitions\InterpolatorTransition.cpp" />
+    <ClCompile Include="src\Direct2DLib\Transitions\Transition.cpp" />
+    <ClCompile Include="src\Direct2DLib\Transitions\TransitionManager.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Direct2DLib\Core\Application.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Base.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Color.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Debug.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Forwards.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Graphics.h" />
+    <ClInclude Include="src\Direct2DLib\Events\InputEvents.h" />
+    <ClInclude Include="src\Direct2DLib\Math\Math.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Style.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Styles.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Texture.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Timestep.h" />
+    <ClInclude Include="src\Direct2DLib\Math\Vector2.h" />
+    <ClInclude Include="src\Direct2DLib\Core\Window.h" />
+    <ClInclude Include="src\Direct2DLib\Events\Event.h" />
+    <ClInclude Include="src\Direct2DLib\Events\EventListener.h" />
+    <ClInclude Include="src\Direct2DLib\Events\ApplicationEvents.h" />
+    <ClInclude Include="src\Direct2DLib\Events\MessageManager.h" />
+    <ClInclude Include="src\Direct2DLib\Direct2DLib.h" />
+    <ClInclude Include="src\Direct2DLib\Events\WindowEvents.h" />
+    <ClInclude Include="src\Direct2DLib\Input\Input.h" />
+    <ClInclude Include="src\Direct2DLib\Renderer\Boundary.h" />
+    <ClInclude Include="src\Direct2DLib\Renderer\Camera.h" />
+    <ClInclude Include="src\Direct2DLib\Renderer\Light.h" />
+    <ClInclude Include="src\Direct2DLib\Renderer\Ray.h" />
+    <ClInclude Include="src\Direct2DLib\Renderer\Renderer.h" />
+    <ClInclude Include="src\Direct2DLib\Renderer\RendererGlobal.h" />
+    <ClInclude Include="src\Direct2DLib\Renderer\ResourceManager.h" />
+    <ClInclude Include="src\Direct2DLib\Renderer\ResourceManagerGlobal.h" />
+    <ClInclude Include="src\Direct2DLib\Renderer\Shadow.h" />
+    <ClInclude Include="src\Direct2DLib\Transitions\ColorTransition.h" />
+    <ClInclude Include="src\Direct2DLib\Transitions\InterpolatorTransition.h" />
+    <ClInclude Include="src\Direct2DLib\Transitions\Transition.h" />
+    <ClInclude Include="src\Direct2DLib\Transitions\TransitionManager.h" />
+    <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Utils.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

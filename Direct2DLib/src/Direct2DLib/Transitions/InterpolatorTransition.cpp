@@ -11,15 +11,14 @@ namespace D2DLib
 		bool autoStart,
 		TransitionTiming timing
 	)
-		: Transition(duration, autoStart, timing), m_Start(start), m_End(end), m_Value(start)
+		: Transition(start, end, duration, autoStart, timing)
 	{
 	}
 
 	InterpolatorTransition::InterpolatorTransition(float start, float end, float duration, TransitionTiming timing)
-		: Transition(duration, false, timing), m_Start(start), m_End(end), m_Value(start)
+		: Transition(start, end, duration, false, timing)
 	{
 	}
-
 
 	void InterpolatorTransition::Update()
 	{

@@ -3,6 +3,6 @@
 namespace D2DLib
 {
 
-	class Window;
+	class D2DLIB_API Window;
 
 }

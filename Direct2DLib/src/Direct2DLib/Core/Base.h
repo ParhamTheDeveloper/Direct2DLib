@@ -1,14 +1,21 @@
 #pragma once
 
+// Disabling the C4251 warning for STD dll-interfaces
+#pragma warning(disable: 4251)
+
 #include "pch.h"
 
 // Core macros
+
+// Configuration
 
 #ifdef _DEBUG
 	#define D2DLIB_DEBUG 1
 #else
 	#define D2DLIB_RELEASE 1
 #endif // _DEBUG
+
+// Platform
 
 #ifdef _M_X64
 	#define D2DLIB_X64 1
@@ -39,6 +46,25 @@
 		#define D2DLIB_WIN7
 	#endif // _WIN32_WINNT_WIN8
 #endif // _WIN32_WINNT_WIN7
+
+// DLL export and import API
+
+#ifdef D2DLIB_WIN32
+	#ifdef D2DLIB_EXPORTS
+		#ifdef D2DLIB_CLIENT_IMPORTS
+			#define D2DLIB_API __declspec(dllimport)
+		#else
+			#define D2DLIB_API __declspec(dllexport)
+		#endif
+	#else
+		#define D2DLIB_API
+	#endif
+#endif
+
+#define D2DLIB_BEGIN_HEADER_FILE pragma warning(disable: 4251)
+#define D2DLIB_END_HEADER_FILE pragma warning(default: 4251)
+
+// Win32 Custom Events
 
 #define D2DLIB_WM_APPLICATION_RENDER (WM_APP + 1)
 

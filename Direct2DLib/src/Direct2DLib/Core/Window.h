@@ -18,7 +18,7 @@
 namespace D2DLib
 {
 
-	class Window :
+	class D2DLIB_API Window :
 		public MessageManager<Window>,
 		public EventListener,
 		public Input::Mouse,
@@ -102,9 +102,9 @@ namespace D2DLib
 		Map<UInt64, Function<void(const WindowTimerEvent&)>> m_Timers;
 		static Window* s_Instance;
 	private:
-		friend Window* GetMainWindow();
+		friend D2DLIB_API Window* GetMainWindow();
 	};
 
-	Window* GetMainWindow();
+	D2DLIB_API Window* GetMainWindow();
 
 }

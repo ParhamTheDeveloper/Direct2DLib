@@ -5,7 +5,7 @@
 namespace D2DLib
 {
 
-	class InterpolatorTransition : public Transition
+	class D2DLIB_API InterpolatorTransition : public Transition<float>
 	{
 	public:
 		InterpolatorTransition(
@@ -17,13 +17,8 @@ namespace D2DLib
 		);
 		InterpolatorTransition(float start, float end, float duration, TransitionTiming timing);
 
-		float GetValue() const { return m_Value; };
-		float GetStartValue() const { return m_Start; }
-		float GetEndValue() const { return m_End; }
-
 		void Update() override;
 	private:
-		float m_Start, m_End, m_Value;
 		bool m_IsFirst = true;
 	};
 

@@ -5,89 +5,73 @@ namespace D2DLib
 {
 
     Light::Light(
-        const Vector2& position,
+        const CircleStyle& style,
         const ShapeStyle& shadowStyle,
-        float radius,
         bool noShadowLimitation
     ) :
-        Position(position),
+        m_Style(style),
         ShadowStyle(shadowStyle),
-        Radius(radius),
         NoShadowLimitation(noShadowLimitation)
     {
+        Vector2 position = m_Style.Position + m_Style.Radius;
+        m_Rays.reserve(360);
         for (float i = 0; i < 360; i += 1.0f)
         {
-            Ray ray(Position, DegreesToRadians(i));
-            m_Rays.push_back(ray);
+            m_Rays.emplace_back(position, DegreesToRadians(i));
         }
     }
 
     void Light::Update(const Vector2& position)
     {
-        Position = position;
+        m_Style.Position = position;
         for (Ray& ray : m_Rays)
         {
-            ray.Position = position;
+            ray.Position = position + m_Style.Radius;
         }
     }
 
-    void Light::Look(
-        const Vector<Boundary>& boundaries,
-        bool drawCastedLines,
-        const LineStyle& castedLinesStyle
-    )
+    const Vector<Boundary> Light::GetBoundaryByType(const Vector<RectangleStyle>& shapes)
     {
-        for (Ray& ray : m_Rays)
+        Vector<Boundary> boundaries;
+        for (const auto& shape : shapes)
         {
-            Vector2 closest;
-            float record = D2D1::FloatMax();
-            for (const Boundary boundary : boundaries)
+            Vector<Boundary> bounds;
+            bounds.reserve(4);
+
+            const Vector2 pos = shape.Position;
+            bounds.emplace_back(Boundary(pos, pos + Vector2(0.0f, shape.Height)));
+            bounds.emplace_back(Boundary(pos + Vector2(shape.Width, 0.0f),
+                pos + Vector2(shape.Width, shape.Height)));
+            bounds.emplace_back(Boundary(pos, pos + Vector2(shape.Width, 0.0f)));
+            bounds.emplace_back(Boundary(pos + Vector2(shape.Height, 0.0f),
+                pos + Vector2(shape.Width, shape.Height)));
+
+            for (auto& bound : bounds)
             {
-                Vector2 point = ray.Cast(boundary);
-                if (point)
-                {
-                    const float distance = Vector2::Distance(Position, point);
-                    if (distance < record)
-                    {
-                        record = distance;
-                        closest = point;
-                        Vector2 a = boundary.Start;
-                        Vector2 b = boundary.End;
-                        Shadow shadow(a, b, Position, Radius, ShadowStyle);
-                        if (NoShadowLimitation)
-                        {
-                            shadow.Draw();
-                        }
-                        else if (distance < Radius * 2.0f)
-                        {
-                            shadow.Draw();
-                        }
-                    }
-                }
-            }
-            if (closest && drawCastedLines)
-            {
-                LineStyle lineStyle = castedLinesStyle;
-                lineStyle.Start = Position;
-                lineStyle.End = closest;
-                DrawLine(lineStyle);
+                boundaries.push_back(bound);
             }
         }
+        return boundaries;
     }
 
-    void Light::Draw(
-        const LineStyle& raysStyle,
-        const ShapeStyle& lightCenterStyle,
-        const Vector2& rayNumerator
-    )
+    const Vector<Boundary> Light::GetBoundaryByType(const Vector<TriangleStyle>& shapes)
     {
-        ShapeStyle lightCircleStyle = lightCenterStyle;
-        lightCircleStyle.Position = Position;
-        DrawCircle(lightCircleStyle);
-        for (Ray& ray : m_Rays)
+        Vector<Boundary> boundaries;
+        for (const auto& shape : shapes)
         {
-            ray.Draw(raysStyle, rayNumerator);
+            Vector<Boundary> bounds;
+            bounds.reserve(3);
+
+            bounds.emplace_back(Boundary(shape.VertexA, shape.VertexB));
+            bounds.emplace_back(Boundary(shape.VertexB, shape.VertexC));
+            bounds.emplace_back(Boundary(shape.VertexC, shape.VertexA));
+
+            for (auto& bound : bounds)
+            {
+                boundaries.push_back(bound);
+            }
         }
+        return boundaries;
     }
 
 }

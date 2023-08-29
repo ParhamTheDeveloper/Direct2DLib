@@ -6,7 +6,7 @@
 namespace D2DLib
 {
 	
-	class Texture
+	class D2DLIB_API Texture
 	{
 	public:
 		Texture(const String& filePath, const RectangleStyle& style, Graphics* gfx = nullptr);

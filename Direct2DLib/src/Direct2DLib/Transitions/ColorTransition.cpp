@@ -12,12 +12,12 @@ namespace D2DLib
 		bool autoStart,
 		TransitionTiming timing
 	)
-		: Transition(duration, autoStart, timing), m_Start(start), m_End(end), m_Value(start)
+		: Transition(start, end, duration, autoStart, timing)
 	{
 	}
 
 	ColorTransition::ColorTransition(Color start, Color end, float duration, TransitionTiming timing)
-		: Transition(duration, false, timing), m_Start(start), m_End(end), m_Value(start)
+		: Transition(start, end, duration, false, timing)
 	{
 	}
 

@@ -5,17 +5,17 @@
 #include "Style.h"
 #include "Direct2DLib/Renderer/Renderer.h"
 
-#define D2DLIB_DEBUG_DECLARE_LOG_METHOD(name)										\
-	template<typename ...Args>														\
-	static void name(Args&&... args)												\
-	{																				\
-		Logger::Print<DebugLogLevel::name>(std::forward<Args>(args)...);			\
+#define D2DLIB_DEBUG_DECLARE_LOG_METHOD(name)												\
+	template<typename ...Args>																\
+	static void name(Args&&... args)														\
+	{																						\
+		Logger::Print<DebugLogLevel::name>(std::forward<Args>(args)...);					\
 	}
 
 namespace D2DLib
 {
 
-	enum class DebugLogLevel : UInt8
+	enum class D2DLIB_API DebugLogLevel : UInt8
 	{
 		Log,
 		Info,
@@ -25,7 +25,7 @@ namespace D2DLib
 		Progress
 	};
 
-	class Logger
+	class D2DLIB_API Logger
 	{
 	public:
 		static void Print()
@@ -99,7 +99,7 @@ namespace D2DLib
 		}
 	};
 
-	class Debug
+	class D2DLIB_API Debug
 	{
 	public:
 		// Logging methods
@@ -115,7 +115,7 @@ namespace D2DLib
 			
 		// Logging methods
 
-		class Console
+		class D2DLIB_API Console
 		{
 		public:
 			static Style GetClientStyle();

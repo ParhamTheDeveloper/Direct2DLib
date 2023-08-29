@@ -8,7 +8,7 @@ namespace D2DLib
 {
 
 	template<typename DerivedWindow>
-	class MessageManager
+	class D2DLIB_API MessageManager
 	{
 	public:
 		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

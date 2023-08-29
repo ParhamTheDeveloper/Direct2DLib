@@ -3,10 +3,12 @@ C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Core\Debug.cpp;C:\dev\cpp\Dir
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Core\Graphics.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Graphics.obj
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Core\Texture.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Texture.obj
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Core\Window.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Window.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Input\Input.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Input.obj
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Math\Math.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Math.obj
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Math\Vector2.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Vector2.obj
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Renderer\Camera.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Camera.obj
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Renderer\Light.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Light.obj
+C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Renderer\Mesh.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Mesh.obj
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Renderer\Ray.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Ray.obj
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Renderer\Renderer.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\Renderer.obj
 C:\dev\cpp\Direct2DLib\Direct2DLib\src\Direct2DLib\Renderer\RendererGlobal.cpp;C:\dev\cpp\Direct2DLib\output-int\Debug-x64\Direct2DLib\RendererGlobal.obj

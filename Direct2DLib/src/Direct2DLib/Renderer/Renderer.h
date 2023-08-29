@@ -4,11 +4,12 @@
 #include "Direct2DLib/Core/Styles.h"
 #include "Direct2DLib/Core/Texture.h"
 #include "Direct2DLib/Renderer/Camera.h"
+#include "Direct2DLib/Renderer/Mesh.h"
 
 namespace D2DLib
 {
 
-	class Renderer
+	class D2DLIB_API Renderer
 	{
 	public:
 		Renderer(Graphics* gfx = nullptr);
@@ -65,6 +66,63 @@ namespace D2DLib
 			const LineStyle& line,
 			const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 		);
+
+		template<MeshType Type>
+		void DrawMesh(const Mesh<Type>& mesh)
+		{
+			ShapeStyle style = mesh.GetStyle();
+			switch (Type)
+			{
+				case MeshType::Rectangle:
+					{
+						DrawRectangle(*SafeCast<RectangleStyle>(&style));
+					}
+					break;
+
+				case MeshType::Circle:
+					{
+						DrawCircle(*SafeCast<CircleStyle>(&style));
+					}
+					break;
+				
+				case MeshType::Triangle:
+					{
+						DrawTriangle(*SafeCast<TriangleStyle>(&style));
+					}
+					break;
+
+				case MeshType::Custom:
+					{
+						auto pathGeometry = mesh.GetGeometry();
+						if (style.Outline.Width && style.Outline.Color)
+						{
+							D2D1_CAP_STYLE capStyle = style.BorderRadius.IsNonZero() ? D2D1_CAP_STYLE_ROUND : D2D1_CAP_STYLE_FLAT;
+							D2D1_LINE_JOIN lineJoin = style.BorderRadius.IsNonZero() ? D2D1_LINE_JOIN_ROUND : D2D1_LINE_JOIN_MITER;
+							ID2D1StrokeStyle* pStrokeStyle = CreateStrokeStyle(capStyle, lineJoin, D2D1_DASH_STYLE_SOLID);
+
+							if (pStrokeStyle)
+							{
+								if (style.Outline.Width)
+								{
+									m_RenderTarget->DrawGeometry(
+										pathGeometry,
+										style.Outline.Color,
+										style.Outline.Width,
+										pStrokeStyle
+									);
+								}
+								SafeRelease(&pStrokeStyle);
+							}
+						}
+						m_RenderTarget->FillGeometry(
+							pathGeometry,
+							style.BackgroundColor
+						);
+					}
+					break;
+			}
+		}
+
 		void RenderText(
 			const String& text,
 			const TextStyle& style,
@@ -88,9 +146,9 @@ namespace D2DLib
 		IDWriteFactory* m_DWriteFactory = nullptr;
 		static Renderer* s_Instance;
 	private:
-		friend Renderer* InitVirtualRenderer();
-		friend void ShutdownVirtualRenderer();
-		friend Renderer* GetMainRenderer();
+		friend D2DLIB_API Renderer* InitVirtualRenderer();
+		friend D2DLIB_API void ShutdownVirtualRenderer();
+		friend D2DLIB_API Renderer* GetMainRenderer();
 	};
 
 }

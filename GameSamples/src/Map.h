@@ -7,158 +7,189 @@ using namespace D2DLib;
 class GameApplication : public Application
 {
 public:
-    GameApplication(const String& title, UInt width, UInt height)
-        : Application(title, width, height, ApplicationWindowInfo(Color(), true))
-    {
-        InitializeEvents();
-    }
+	GameApplication(const String& title, UInt width, UInt height)
+		: Application(title, width, height)
+	{
+		SetVSync(true);
+	}
 
-    void InitializeResources() override
-    {
-        m_LightStyle = { 800.0f, 800.0f, { 0.0f, 0.0f } };
-        CreateLightBrush();
-        GenerateWall();
-    };
+	void InitializeResources() override
+	{
+		CreateLightTransitions();
+		CreateLightResources();
+	}
 
-    void UninitializeResources() override
-    {
-        SafeRelease(&m_LightStyle.BackgroundColor);
-        for (ShapeStyle& rect : m_Rectangles)
-        {
-            SafeRelease(&rect.BackgroundColor);
-        }
-    }
+	void UninitializeResources() override
+	{
+		ReleaseLightResources();
+		for (auto& block : m_Blocks)
+		{
+			block.BackgroundColor.Release();
+			block.Outline.Color.Release();
+		}
+		for (auto& triangle : m_Triangles)
+		{
+			triangle.BackgroundColor.Release();
+			triangle.Outline.Color.Release();
+		}
+	}
 
-    void InitializeEvents() override
-    {
-        m_Window->AddListener<MouseMoveEvent>(EventType::MouseMove,
-            BindEventCallback(&GameApplication::OnMouseMove, this));
-        m_Window->AddListener<MouseDownEvent>(EventType::MouseDown,
-            BindEventCallback(&GameApplication::OnMouseDown, this));
-        m_Window->RemoveListener(EventType::WindowResize);
-        m_Window->AddListener<KeyDownEvent>(EventType::KeyDown,
-            BindEventCallback(&GameApplication::OnKeyDown, this));
-    }
+	void InitializeEvents() override
+	{
+		m_Window->AddListener<MouseMoveEvent>(EventType::MouseMove, BindEventCallback(&GameApplication::OnMouseMove, this));
+		m_Window->AddListener<MouseClickEvent>(EventType::MouseClick, BindEventCallback(&GameApplication::OnClick, this));
+		m_Window->AddListener<KeyPressEvent>(EventType::KeyPress, BindEventCallback(&GameApplication::OnKeyPress, this));
+	}
 
-    void OnMouseMove(const MouseMoveEvent& e)
-    {
-        m_MousePos = e.Position;
-        if (m_IsLightFollowing)
-        {
-            m_LightStyle.Position.X = e.Position.X - m_LightStyle.Width / 2.0f;
-            m_LightStyle.Position.Y = e.Position.Y - m_LightStyle.Height / 2.0f;
-        }
-        CreateLightBrush();
-    }
+	void OnMouseMove(const MouseMoveEvent& e)
+	{
+		Vector2 lightCenter = e.Position - Vector2(m_Light.Radius.X, m_Light.Radius.Y);
+		m_Light.Position = lightCenter;
+	}
 
-    void OnMouseDown(const MouseDownEvent& e)
-    {
-        auto rectsBrush = CreateBrush({ 30.0f, 30.0f, 30.0f });
-        ShapeStyle rect = { 50.0f, 50.0f };
-        rect.Position.X = e.Position.X - rect.Width / 2.0f;
-        rect.Position.Y = e.Position.Y - rect.Height / 2.0f;
-        rect.BackgroundColor = rectsBrush;
-        m_Rectangles.push_back(rect);
-    }
+	void OnClick(const MouseClickEvent& e)
+	{
+		if (e.IsRight)
+		{
+			m_IsLightOn = !m_IsLightOn;
+			CreateLightTransitions();
+		}
+		else
+		{
+			String msg = L"Added a new shape with the type of [{}] And position of [{}, {}]";
+			switch (m_ShapeType)
+			{
+				case ShapeStyleType::Rectangle:
+					{
+						RectangleStyle blockStyle(25.0f, 25.0f, 0.0f, CreateBrush(Color(60.0f, 45.0f, 50.0f)));
+						blockStyle.Outline = Outline(2.0f, CreateBrush(Color(30.0f, 155.0f, 225.0f)));
+						Vector2 blockCenter = e.Position - Vector2(blockStyle.Width / 2.0f, blockStyle.Height / 2.0f);
+						blockStyle.Position = blockCenter;
+						m_Blocks.push_back(blockStyle);
+						Debug::Info(std::vformat(msg, std::make_wformat_args(
+							L"Rectangle", blockStyle.Position.X, blockStyle.Position.Y)));
+					}
+					break;
 
-    void CreateLightBrush()
-    {
-        m_LightStyle.BackgroundColor = CreateBrush(
-            m_LightStyle,
-            {
-                { 0.0f, Color(255.0f, 255.0f, 255.0f) },
-                { 1.0f, Color(255.0f, 255.0f, 255.0f, 0.0f) }
-            },
-            {}, true
-        );
-    }
+				case ShapeStyleType::Triangle:
+					{
+						TriangleStyle triangleStyle(25.0f, 25.0f, 0.0f, CreateBrush(Color(60.0f, 45.0f, 50.0f)));
+						triangleStyle.Outline = Outline(2.0f, CreateBrush(Color(30.0f, 155.0f, 225.0f)));
+						Vector2 triangleCenter = e.Position - Vector2(triangleStyle.Width / 2.0f, triangleStyle.Height / 2.0f);
+						triangleStyle.VertexA = triangleCenter + Vector2(-triangleStyle.Width / 2.0f, triangleStyle.Height / 2.0f);
+						triangleStyle.VertexB = triangleCenter + Vector2(0.0f, -triangleStyle.Height / 2.0f);
+						triangleStyle.VertexC = triangleCenter + Vector2(triangleStyle.Width / 2.0f, triangleStyle.Height / 2.0f);
+						m_Triangles.push_back(triangleStyle);
+						Debug::Info(std::vformat(msg, std::make_wformat_args(
+							L"Triangle", triangleCenter.X, triangleCenter.Y)));
+					}
+					break;
+			}
+		}
+	}
 
-    void OnKeyDown(const KeyDownEvent& e)
-    {
-        float cameraMovementSpeed = 300.0f;
-        if (e.Character == L'O')
-        {
-            m_IsLightOn = true;
-        }
-        else if (e.Character == L'C')
-        {
-            m_IsLightOn = false;
-        }
-        else if (e.Character == L'U')
-        {
-            m_IsLightFollowing = false;
-        }
-        else if (e.Character == L'F')
-        {
-            m_IsLightFollowing = true;
-        }
-        if (e.Character == L'W')
-        {
-            m_Camera.Position.Y -= cameraMovementSpeed * m_Time.DeltaTime;
-            m_Camera.Update();
-        }
-        if (e.Character == L'S')
-        {
-            m_Camera.Position.Y += cameraMovementSpeed * m_Time.DeltaTime;
-            m_Camera.Update();
-        }
-        if (e.Character == L'A')
-        {
-            m_Camera.Position.X -= cameraMovementSpeed * m_Time.DeltaTime;
-            m_Camera.Update();
-        }
-        if (e.Character == L'D')
-        {
-            m_Camera.Position.X += cameraMovementSpeed * m_Time.DeltaTime;
-            m_Camera.Update();
-        }
-    }
+	void OnKeyPress(const KeyPressEvent& e)
+	{
+		const String msg = L"Changed the Shape type to {}";
+		switch (e.Character)
+		{
+			case L'r':
+				{
+					m_ShapeType = ShapeStyleType::Rectangle;
+					Debug::Info(std::vformat(msg, std::make_wformat_args(L"Rectangle")));
+				}
+				break;
 
-    void GenerateWall()
-    {
-        Style clientSize = m_Window->GetClientSize();
-        for (int i = 0; i < 5; i++)
-        {
-            Vector2 start(Cast<float>(GetRandomNumber(100, Cast<UInt>(clientSize.Width))),
-                Cast<float>(GetRandomNumber(100, Cast<UInt>(clientSize.Width))));
-            Vector2 end(Cast<float>(GetRandomNumber(100, Cast<UInt>(clientSize.Height))),
-                Cast<float>(GetRandomNumber(100, Cast<UInt>(clientSize.Height))));
-            m_Walls.push_back(Boundary(start, end));
-        }
-    }
+			case L't':
+				{
+					m_ShapeType = ShapeStyleType::Triangle;
+					Debug::Info(std::vformat(msg, std::make_wformat_args(L"Triangle")));
+				}
+				break;
+		}
+	}
 
-    void Render(DeltaTime deltaTime) override
-    {
-        if (m_IsLightOn)
-        {
-            DrawCircle(m_LightStyle);
-        }
+	void CreateLightTransitions()
+	{
+		if (m_IsLightOn)
+		{
+			m_LightTransition.SetStartValue(0.0f);
+			m_LightTransition.SetEndValue(255.0f);
+			m_LightTransition.Reset();
+		}
+		else
+		{
+			m_LightTransition.SetStartValue(255.0f);
+			m_LightTransition.SetEndValue(0.0f);
+			m_LightTransition.Reset();
+		}
+		m_TransitionManager.AddTransition(m_LightTransition);
+	}
 
-        for (const ShapeStyle& rect : m_Rectangles)
-        {
-            DrawRectangle(rect);
-        }
+	void DrawShapes()
+	{
+		for (auto& block : m_Blocks)
+		{
+			DrawRectangle(block);
+		}
+		for (auto& triangle : m_Triangles)
+		{
+			DrawTriangle(triangle);
+		}
+	}
 
-        ShapeStyle shadowStyle;
-        shadowStyle.BackgroundColor = CreateBrush(Color(20.0f, 20.0f, 20.0f));
-        Light particle(0.0f, shadowStyle, m_LightStyle.Width / 2.0f);
-        for (Boundary& wall : m_Walls)
-        {
-            wall.Draw();
-        }
-        particle.Update(Vector2(
-            m_LightStyle.Position.X + m_LightStyle.Width / 2.0f,
-            m_LightStyle.Position.Y + m_LightStyle.Height / 2.0)
-        );
-        particle.Look(m_Walls);
-        SafeRelease(&shadowStyle.BackgroundColor);
-    }
+	void CreateLightResources()
+	{
+		m_Light.Radius = 150.0f;
+		auto backgroundBrush = CreateRadialGradientBrush(
+			m_Light,
+			Vector<GradientStop>({
+				GradientStop(0.0f, Color(255.0f, 255.0f, 255.0f, m_LightTransition.GetValue())),
+				GradientStop(1.0f, Color(255.0f, 255.0f, 255.0f, 0.0f))
+			})
+		);
+		m_Light.BackgroundColor = backgroundBrush;
+	}
+
+	void DrawLight()
+	{
+		DrawCircle(m_Light);
+
+		ShapeStyle shadowStyle;
+		shadowStyle.BackgroundColor = CreateBrush(Color(20.0f, 20.0f, 20.0f));
+		Light light(m_Light, shadowStyle, true);
+		light.Update(m_Light.Position);
+		
+		if (m_IsLightOn)
+		{
+			light.Look(m_Blocks);
+			light.Look(m_Triangles);
+		}
+
+		DrawShapes();
+		shadowStyle.BackgroundColor.Release();
+	}
+
+	void ReleaseLightResources()
+	{
+		m_Light.BackgroundColor.Release();
+	}
+
+	void Render(DeltaTime deltaTime)
+	{
+		CreateLightResources();
+
+		DrawLight();
+
+		m_TransitionManager.UpdateTransitions();
+		ReleaseLightResources();
+	}
 private:
-    ShapeStyle m_LightStyle;
-    Vector<ShapeStyle> m_Rectangles;
-    bool m_IsLightOn = true;
-    bool m_IsLightFollowing = true;
-    Vector2 m_MousePos;
-    Camera m_Camera;
-    Vector<Boundary> m_Walls;
+	CircleStyle m_Light;
+	Vector<RectangleStyle> m_Blocks;
+	Vector<TriangleStyle> m_Triangles;
+	bool m_IsLightOn = true;
+	InterpolatorTransition m_LightTransition = { 0.0f, 255.0f, 0.2f };
+	TransitionManager m_TransitionManager;
+	ShapeStyleType m_ShapeType = ShapeStyleType::Default;
 };

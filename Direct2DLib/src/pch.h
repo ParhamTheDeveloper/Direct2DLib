@@ -2,6 +2,14 @@
 
 // Windows header files
 
+#ifndef UNICODE
+	#define UNICODE
+#endif
+
+#ifndef _UNICODE
+	#define _UNICODE
+#endif
+
 #include <Windows.h>
 
 // Direct2D header files
@@ -27,6 +35,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <map>
 #include <deque>
@@ -39,3 +48,4 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <format>

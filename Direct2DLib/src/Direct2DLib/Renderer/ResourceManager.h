@@ -7,7 +7,7 @@
 namespace D2DLib
 {
 
-	struct ResourceDeleter
+	struct D2DLIB_API ResourceDeleter
 	{
 		template<typename T>
 		void operator() (T* pResource)
@@ -16,40 +16,55 @@ namespace D2DLib
 		}
 	};
 
-	template<typename T>
-	using Resource = T*;
-
-	struct GradientStop
+	struct D2DLIB_API GradientStop
 	{
 		float Position;
 		Color Color;
 	};
 
-	class ResourceManager
+	class D2DLIB_API ResourceManager
 	{
 	public:
 		ResourceManager(Graphics* gfx = nullptr);
 
-		Resource<ID2D1SolidColorBrush> CreateBrush(const Color& color);
-		Resource<ID2D1LinearGradientBrush> CreateBrush(
+		const Brush CreateBrush(const Color& color);
+		const Brush CreateLinearGradientBrush(
 			const ShapeStyle& style,
 			const Vector<GradientStop>& stops,
-			float rotation = 0.0f
+			float rotation
 		);
-		Resource<ID2D1RadialGradientBrush> CreateBrush(
+		const Brush CreateRadialGradientBrush(
 			const ShapeStyle& style,
 			const Vector<GradientStop>& stops,
 			const Vector2& center,
 			bool centered = false
 		);
+		const Brush CreateRadialGradientBrush(
+			const CircleStyle& style,
+			const Vector<GradientStop>& stops,
+			const Vector2& center,
+			bool centered = false
+		);
+		const Brush CreateRadialGradientBrush(
+			const ShapeStyle& style,
+			const Vector<GradientStop>& stops,
+			bool centered = true
+		);
+		const Brush CreateRadialGradientBrush(
+			const CircleStyle& style,
+			const Vector<GradientStop>& stops,
+			bool centered = true
+		);
+
+		void ReleaseResource(Resource& resource);
 	private:
 		ID2D1DeviceContext6* m_RenderTarget = nullptr;
 		ID2D1Factory* m_Factory = nullptr;
 		static ResourceManager* s_Instance;
 	private:
-		friend void InitializeVirtualResourceManager();
-		friend void ShutdownVirtualResourceManager();
-		friend ResourceManager* GetMainResourceManager();
+		friend D2DLIB_API void InitializeVirtualResourceManager();
+		friend D2DLIB_API void ShutdownVirtualResourceManager();
+		friend D2DLIB_API ResourceManager* GetMainResourceManager();
 	};
 
 }

@@ -5,7 +5,7 @@
 namespace D2DLib
 {
 
-	class ApplicationRenderEvent : public Event
+	class D2DLIB_API ApplicationRenderEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(

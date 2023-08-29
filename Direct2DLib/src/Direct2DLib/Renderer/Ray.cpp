@@ -49,12 +49,4 @@ namespace D2DLib
         }
     }
 
-    void Ray::Draw(const LineStyle& style, const Vector2& sizeNumerator)
-    {
-        LineStyle rayStyle = style;
-        rayStyle.Start = Position;
-        rayStyle.End = Position + Direction * sizeNumerator;
-        DrawLine(rayStyle);
-    }
-
 }

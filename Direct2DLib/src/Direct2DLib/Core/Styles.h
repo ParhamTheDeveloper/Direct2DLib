@@ -6,7 +6,7 @@
 namespace D2DLib
 {
 
-	class WindowStyle
+	class D2DLIB_API WindowStyle
 	{
 	public:
 		WindowStyle(
@@ -63,21 +63,30 @@ namespace D2DLib
 		DWORD ExtraWindowStyles;
 	};
 
-	struct Outline
+	struct D2DLIB_API Outline
 	{
 		Outline(
 			float width = 0.0f,
-			ID2D1Brush* color = nullptr
+			const Brush& color = nullptr
 		)
 			: Width(width), Color(color)
 		{
 		}
 
 		float Width;
-		ID2D1Brush* Color;
+		Brush Color;
 	};
 
-	class ShapeStyle : public Style
+	enum class D2DLIB_API ShapeStyleType : UInt8
+	{
+		Default,
+		Rectangle,
+		Circle,
+		Triangle,
+		Text
+	};
+
+	class D2DLIB_API ShapeStyle : public Style
 	{
 	public:
 		D2DLIB_DECLARE_STYLE_CTOR(
@@ -93,13 +102,31 @@ namespace D2DLib
 		}
 
 		const UInt& GetSides() const { return Sides; }
+		virtual const ShapeStyleType GetType() const { return ShapeStyleType::Default; }
 	public:
 		Vector2 BorderRadius;
 		Outline Outline;
 		UInt Sides;
 	};
 	
-	class TriangleStyle : public ShapeStyle
+	class D2DLIB_API RectangleStyle : public ShapeStyle
+	{
+	public:
+		D2DLIB_DECLARE_SHAPE_STYLE_CTOR(
+			RectangleStyle,
+			4,
+			bool isLine = false
+		)
+			IsLine(isLine)
+		{
+		}
+
+		const ShapeStyleType GetType() const override { return ShapeStyleType::Rectangle; }
+	private:
+		bool IsLine;
+	};
+
+	class D2DLIB_API TriangleStyle : public ShapeStyle
 	{
 	public:
 		D2DLIB_DECLARE_SHAPE_STYLE_CTOR(
@@ -114,28 +141,15 @@ namespace D2DLib
 			VertexC(vertexC)
 		{
 		}
+
+		const ShapeStyleType GetType() const override { return ShapeStyleType::Triangle; }
 	public:
 		Vector2 VertexA;
 		Vector2 VertexB;
 		Vector2 VertexC;
 	};
 
-	class RectangleStyle : public ShapeStyle
-	{
-	public:
-		D2DLIB_DECLARE_SHAPE_STYLE_CTOR(
-			RectangleStyle,
-			4,
-			bool isLine = false
-		)
-			IsLine(isLine)
-		{
-		}
-	private:
-		bool IsLine;
-	};
-
-	class CircleStyle : public ShapeStyle
+	class D2DLIB_API CircleStyle : public ShapeStyle
 	{
 	public:
 		D2DLIB_DECLARE_SHAPE_STYLE_CTOR(
@@ -150,7 +164,7 @@ namespace D2DLib
 		Vector2 Radius;
 	};
 
-	class LineStyle : public ShapeStyle
+	class D2DLIB_API LineStyle : public ShapeStyle
 	{
 	public:
 		D2DLIB_DECLARE_SHAPE_STYLE_CTOR(
@@ -163,11 +177,13 @@ namespace D2DLib
 			End(end)
 		{
 		}
+
+		const ShapeStyleType GetType() const override { return ShapeStyleType::Circle; }
 	public:
 		Vector2 Start, End;
 	};
 
-	class Font
+	class D2DLIB_API Font
 	{
 	public:
 		Font(
@@ -193,24 +209,24 @@ namespace D2DLib
 		DWRITE_FONT_STRETCH FontStretch;
 	};
 
-	class TextStyle : public Style
+	class D2DLIB_API TextStyle : public ShapeStyle
 	{
 	public:
-		D2DLIB_DECLARE_STYLE_CTOR(
+		D2DLIB_DECLARE_SHAPE_STYLE_CTOR(
 			TextStyle,
-			ID2D1Brush* Color = nullptr,
-			D2DLib::Font font = D2DLib::Font(),
-			float borderRadius = 0.0f
+			0,
+			const Brush& Color = nullptr,
+			D2DLib::Font font = D2DLib::Font()
 		)
 			Font(font),
-			Color(Color),
-			BorderRadius(borderRadius)
+			Color(Color)
 		{
 		}
+
+		const ShapeStyleType GetType() const override { return ShapeStyleType::Text; }
 	public:
 		Font Font;
-		ID2D1Brush* Color;
-		float BorderRadius;
+		Brush Color;
 	};
 
 }

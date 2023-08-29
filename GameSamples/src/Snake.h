@@ -66,8 +66,8 @@ private:
 public:
 	float Size;
 private:
-	Resource<ID2D1SolidColorBrush> m_RowsBrush;
-	Resource<ID2D1SolidColorBrush> m_ColsBrush;
+	Brush m_RowsBrush;
+	Brush m_ColsBrush;
 };
 
 class Food
@@ -265,11 +265,11 @@ private:
 	{
 		Style windowSize = m_Window->GetClientSize();
 		auto textBrush = CreateBrush({ 255.0f, 255.0f, 255.0f });
-		TextStyle textStyle = {
-			300.0f, 0.0f,
-			{ GetBoardPosition().X, (GetBoardPosition().Y - 40.0f) },
-			nullptr, textBrush, Font(20.0f, L"Bahnschrift")
-		};
+		TextStyle textStyle;
+		textStyle.Width = 300.0f;
+		textStyle.Position = Vector2(GetBoardPosition().X, (GetBoardPosition().Y - 40.0f));
+		textStyle.Color = textBrush;
+		textStyle.Font = Font(20.0f, L"Bahnschrift");
 		RenderText(L"Score: " + std::to_wstring(m_Score), textStyle);
 	}
 
@@ -291,14 +291,11 @@ private:
 			m_DialogTextTransition->GetValue(),
 			m_DialogTextTransition->GetValue()
 		});
-		TextStyle textStyle = {
-			300.0f, 0.0f,
-			{
-				(windowSize.Width - 300.0f) / 2.0f,
-				(windowSize.Height - 32.0f * 3.0f) / 2.0f,
-			},
-			nullptr, textBrush, Font(32.0f, L"Bahnschrift")
-		};
+		TextStyle textStyle;
+		textStyle.Width = 300.0f;
+		textStyle.Position = Vector2((windowSize.Width - 300.0f) / 2.0f, (windowSize.Height - 32.0f * 3.0f) / 2.0f);
+		textStyle.Color = textBrush;
+		textStyle.Font = Font(32.0f, L"Bahnschrift");
 		RenderText(L"Game Over!\nPress space to play again.", textStyle);
 		SafeRelease(&textBrush);
 

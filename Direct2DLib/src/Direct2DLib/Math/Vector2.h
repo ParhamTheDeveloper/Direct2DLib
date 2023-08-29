@@ -9,7 +9,7 @@ namespace D2DLib
 	/// <summary>
 	/// A Vector class that holds two float variables named X and Y.
 	/// </summary>
-	class Vector2
+	class D2DLIB_API Vector2
 	{
 	public:
 		Vector2();

@@ -7,6 +7,6 @@
 namespace D2DLib
 {
 
-	float DegreesToRadians(float degrees);
+	D2DLIB_API float DegreesToRadians(float degrees);
 
 }

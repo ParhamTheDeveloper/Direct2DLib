@@ -20,16 +20,16 @@
 namespace D2DLib
 {
 
-	enum class EventType
+	enum class D2DLIB_API EventType
 	{
 		None,
 		WindowClose, WindowResize, WindowUpdate, WindowTimer,
-		MouseDown, MouseUp, MouseMove,
+		MouseDown, MouseUp, MouseMove, MouseClick = MouseDown,
 		KeyDown, KeyUp, KeyPress,
 		ApplicationRender
 	};
 
-	class Event
+	class D2DLIB_API Event
 	{
 	public:
 		Event(

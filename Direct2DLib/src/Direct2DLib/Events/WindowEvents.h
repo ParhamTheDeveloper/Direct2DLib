@@ -5,7 +5,7 @@
 namespace D2DLib
 {
 
-	class WindowResizeEvent : public Event
+	class D2DLIB_API WindowResizeEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(
@@ -21,7 +21,7 @@ namespace D2DLib
 		float Width, Height;
 	};
 
-	class WindowCloseEvent : public Event
+	class D2DLIB_API WindowCloseEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(
@@ -37,7 +37,7 @@ namespace D2DLib
 		UInt ExitCode;
 	};
 
-	class WindowUpdateEvent : public Event
+	class D2DLIB_API WindowUpdateEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(
@@ -53,7 +53,7 @@ namespace D2DLib
 		float DeltaTime;
 	};
 
-	class WindowTimerEvent : public Event
+	class D2DLIB_API WindowTimerEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(

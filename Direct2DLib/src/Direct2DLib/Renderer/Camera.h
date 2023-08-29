@@ -6,7 +6,7 @@
 namespace D2DLib
 {
 
-	class Camera
+	class D2DLIB_API Camera
 	{
 	public:
 		Camera(Graphics* gfx = nullptr);
@@ -41,9 +41,9 @@ namespace D2DLib
 		ID2D1HwndRenderTarget* m_RenderTarget = nullptr;
 		static Camera* s_Instance;
 	private:
-		friend Camera* GetMainCamera();
+		friend D2DLIB_API Camera* GetMainCamera();
 	};
 	
-	Camera* GetMainCamera();
+	D2DLIB_API Camera* GetMainCamera();
 
 }

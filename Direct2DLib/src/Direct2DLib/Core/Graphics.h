@@ -4,7 +4,7 @@
 
 namespace D2DLib
 {
-	class Graphics
+	class D2DLIB_API Graphics
 	{
 	public:
 		Graphics(HWND hwnd);
@@ -26,8 +26,8 @@ namespace D2DLib
 		ID2D1DeviceContext6* m_DeviceContext = nullptr;
 		static Graphics* s_Instance;
 	private:
-		friend Graphics* GetMainGraphics();
+		friend D2DLIB_API Graphics* GetMainGraphics();
 	};
 
-	Graphics* GetMainGraphics();
+	D2DLIB_API Graphics* GetMainGraphics();
 }

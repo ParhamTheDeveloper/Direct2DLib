@@ -39,7 +39,7 @@ namespace D2DLib
 	/// <param name="from"></param>
 	/// <returns>The casted value</returns>
 	template<typename To, typename From>
-	To Cast(From from)
+	inline To Cast(From from)
 	{
 		return static_cast<To>(from);
 	}
@@ -52,7 +52,7 @@ namespace D2DLib
 	/// <param name="pFrom"></param>
 	/// <returns>The casted pointer value</returns>
 	template<typename To, typename From>
-	To* SafeCast(From* pFrom)
+	inline To* SafeCast(From* pFrom)
 	{
 		return static_cast<To*>(pFrom);
 	}
@@ -65,7 +65,7 @@ namespace D2DLib
 	/// <param name="...args"></param>
 	/// <returns></returns>
 	template<typename T, typename ...Args>
-	Scoped<T> CreateScoped(Args&&... args)
+	inline Scoped<T> CreateScoped(Args&&... args)
 	{
 		return std::make_unique<T>(std::forward<Args>(args)...);
 	}
@@ -78,9 +78,15 @@ namespace D2DLib
 	/// <param name="...args"></param>
 	/// <returns></returns>
 	template<typename T, typename ...Args>
-	Shared<T> CreateShared(Args&&... args)
+	inline Shared<T> CreateShared(Args&&... args)
 	{
 		return std::make_shared<T>(std::forward<Args>(args)...);
+	}
+
+	template<typename FirstType, typename SecondType>
+	inline Pair<FirstType, SecondType> CreatePair(FirstType&& first, SecondType&& second)
+	{
+		return std::make_pair(std::forward<FirstType>(first), std::forward<SecondType>(second));
 	}
 
 	inline UInt GetRandomNumber(UInt min = 0, UInt max = 0)

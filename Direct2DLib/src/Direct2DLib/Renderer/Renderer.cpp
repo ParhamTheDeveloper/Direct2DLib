@@ -154,25 +154,12 @@ namespace D2DLib
 				if (SUCCEEDED(hr))
 				{
 					float outlineWidth = triangle.Outline.Width ? triangle.Outline.Width : 0.0f;
-					pSink->BeginFigure(
-						D2D1::Point2F(
-							triangle.Position.X + outlineWidth,
-							triangle.Height + triangle.Position.Y + outlineWidth
-						),
-						D2D1_FIGURE_BEGIN_FILLED
-					);
-					pSink->AddLine(
-						D2D1::Point2F(
-							triangle.Position.X + outlineWidth + (triangle.Width) * 0.5f,
-							triangle.Position.Y
-						)
-					);
-					pSink->AddLine(
-						D2D1::Point2F(
-							triangle.Width + triangle.Position.X + outlineWidth,
-							triangle.Height + triangle.Position.Y + outlineWidth
-						)
-					);
+					float positionX = triangle.Position.X + outlineWidth;
+					float positionY = triangle.Position.Y + outlineWidth;
+
+					pSink->BeginFigure(D2D1::Point2F(positionX, triangle.Height + positionY), D2D1_FIGURE_BEGIN_FILLED);
+					pSink->AddLine(D2D1::Point2F(positionX + (triangle.Width) * 0.5f, triangle.Position.Y));
+					pSink->AddLine(D2D1::Point2F(triangle.Width + positionX, triangle.Height + positionY));
 					pSink->EndFigure(D2D1_FIGURE_END_CLOSED);
 					hr = pSink->Close();
 
@@ -183,27 +170,29 @@ namespace D2DLib
 							triangle.BackgroundColor
 						);
 
-						if (outlineWidth && triangle.Outline.Color)
+						if (SUCCEEDED(hr))
 						{
-							D2D1_CAP_STYLE capStyle = triangle.BorderRadius.IsNonZero() ?
-								D2D1_CAP_STYLE_ROUND : D2D1_CAP_STYLE_FLAT;
-							D2D1_LINE_JOIN lineJoin = triangle.BorderRadius.IsNonZero() ?
-								D2D1_LINE_JOIN_ROUND : D2D1_LINE_JOIN_MITER;
-							ID2D1StrokeStyle* pStrokeStyle = CreateStrokeStyle(capStyle, lineJoin, D2D1_DASH_STYLE_SOLID);
-
-							if (SUCCEEDED(hr))
+							if (triangle.Outline.Width && triangle.Outline.Color)
 							{
-								if (outlineWidth)
+								D2D1_CAP_STYLE capStyle = triangle.BorderRadius.IsNonZero() ? D2D1_CAP_STYLE_ROUND : D2D1_CAP_STYLE_FLAT;
+								D2D1_LINE_JOIN lineJoin = triangle.BorderRadius.IsNonZero() ? D2D1_LINE_JOIN_ROUND : D2D1_LINE_JOIN_MITER;
+								ID2D1StrokeStyle* pStrokeStyle = CreateStrokeStyle(capStyle, lineJoin, D2D1_DASH_STYLE_SOLID);
+
+								if (pStrokeStyle)
 								{
-									m_RenderTarget->DrawGeometry(
-										pPathGeometry,
-										triangle.Outline.Color,
-										outlineWidth,
-										pStrokeStyle
-									);
+									if (outlineWidth)
+									{
+										m_RenderTarget->DrawGeometry(
+											pPathGeometry,
+											triangle.Outline.Color, outlineWidth * 2.0f,
+											pStrokeStyle
+										);
+									}
+									SafeRelease(&pStrokeStyle);
 								}
 							}
-							SafeRelease(&pStrokeStyle);
+
+							m_RenderTarget->FillGeometry(pPathGeometry, triangle.BackgroundColor);
 						}
 					}
 				}
@@ -225,69 +214,48 @@ namespace D2DLib
 		if (style.BackgroundColor)
 		{
 			SetTransform(transform);
+
 			ID2D1PathGeometry* pPathGeometry = nullptr;
 			HRESULT hr = m_Factory->CreatePathGeometry(&pPathGeometry);
-
 			if (SUCCEEDED(hr))
 			{
 				ID2D1GeometrySink* pSink = nullptr;
 				hr = pPathGeometry->Open(&pSink);
-
 				if (SUCCEEDED(hr))
 				{
-					float outlineWidth = style.Outline.Width ? style.Outline.Width : 0.0f;
-					pSink->BeginFigure(
-						D2D1::Point2F(
-							vertexA.X + style.Position.X + outlineWidth,
-							vertexA.Y + style.Position.Y + outlineWidth
-						),
-						D2D1_FIGURE_BEGIN_FILLED
-					);
-					pSink->AddLine(
-						D2D1::Point2F(
-							vertexB.X + style.Position.X + outlineWidth,
-							vertexB.Y + style.Position.Y + outlineWidth
-						)
-					);
-					pSink->AddLine(
-						D2D1::Point2F(
-							vertexC.X + style.Position.X + outlineWidth,
-							vertexC.Y + style.Position.Y + outlineWidth
-						)
-					);
+					const float outlineWidth = style.Outline.Width;
+					const float positionX = style.Position.X;
+					const float positionY = style.Position.Y;
+
+					pSink->BeginFigure(D2D1::Point2F(vertexA.X + positionX, vertexA.Y + positionY), D2D1_FIGURE_BEGIN_FILLED);
+					pSink->AddLine(D2D1::Point2F(vertexB.X + positionX, vertexB.Y + positionY));
+					pSink->AddLine(D2D1::Point2F(vertexC.X + positionX, vertexC.Y + positionY));
 					pSink->EndFigure(D2D1_FIGURE_END_CLOSED);
 					hr = pSink->Close();
 
 					if (SUCCEEDED(hr))
 					{
-						m_RenderTarget->FillGeometry(
-							pPathGeometry,
-							style.BackgroundColor
-						);
-
 						if (style.Outline.Width && style.Outline.Color)
 						{
-							D2D1_CAP_STYLE capStyle = style.BorderRadius.IsNonZero() ?
-								D2D1_CAP_STYLE_ROUND : D2D1_CAP_STYLE_FLAT;
-							D2D1_LINE_JOIN lineJoin = style.BorderRadius.IsNonZero() ?
-								D2D1_LINE_JOIN_ROUND : D2D1_LINE_JOIN_MITER;
+							D2D1_CAP_STYLE capStyle = style.BorderRadius.IsNonZero() ? D2D1_CAP_STYLE_ROUND : D2D1_CAP_STYLE_FLAT;
+							D2D1_LINE_JOIN lineJoin = style.BorderRadius.IsNonZero() ? D2D1_LINE_JOIN_ROUND : D2D1_LINE_JOIN_MITER;
 							ID2D1StrokeStyle* pStrokeStyle = CreateStrokeStyle(capStyle, lineJoin, D2D1_DASH_STYLE_SOLID);
-							
 
-							if (SUCCEEDED(hr))
+							if (pStrokeStyle)
 							{
 								if (outlineWidth)
 								{
 									m_RenderTarget->DrawGeometry(
 										pPathGeometry,
-										style.Outline.Color,
-										outlineWidth,
+										style.Outline.Color, outlineWidth * 2.0f,
 										pStrokeStyle
 									);
 								}
+								SafeRelease(&pStrokeStyle);
 							}
-							SafeRelease(&pStrokeStyle);
 						}
+
+						m_RenderTarget->FillGeometry(pPathGeometry, style.BackgroundColor);
 					}
 				}
 				SafeRelease(&pSink);
@@ -472,7 +440,7 @@ namespace D2DLib
 							style.Width ? style.Width + style.Position.X : textMetrics.widthIncludingTrailingWhitespace + style.Position.X,
 							textMetrics.height + style.Position.Y
 						};
-						D2D1_ROUNDED_RECT roundedRect = { rect, style.BorderRadius, style.BorderRadius };
+						D2D1_ROUNDED_RECT roundedRect = { rect, style.BorderRadius.X, style.BorderRadius.Y };
 
 						m_RenderTarget->FillRoundedRectangle(
 							roundedRect,

@@ -5,7 +5,7 @@
 namespace D2DLib
 {
 	
-	class Color
+	class D2DLIB_API Color
 	{
 	public:
 		Color(

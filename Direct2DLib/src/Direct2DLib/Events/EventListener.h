@@ -8,7 +8,7 @@ namespace D2DLib
 	/// <summary>
 	/// Subclass of the Window class to handle both system and application Events
 	/// </summary>
-	class EventListener
+	class D2DLIB_API EventListener
 	{
 	private:
 		template<typename EventType>

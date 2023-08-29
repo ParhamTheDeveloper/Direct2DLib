@@ -13,6 +13,7 @@ namespace D2DLib
 		{
 			s_Instance = this;
 		}
+		Init();
 	}
 
 	Graphics::~Graphics()

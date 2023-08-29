@@ -5,7 +5,7 @@
 namespace D2DLib
 {
 
-	class Timestep
+	class D2DLIB_API Timestep
 	{
 	public:
 		Timestep()

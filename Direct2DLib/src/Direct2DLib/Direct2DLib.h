@@ -36,3 +36,7 @@ For more information about the author, please visit:
 #include "Transitions/ColorTransition.h"
 #include "Transitions/TransitionManager.h"
 #include "Renderer/Light.h"
+
+// Enabling the C4251 warning for STD dll-interfaces
+// We reset it when the user includes the client header file (This header file)
+#pragma warning(default: 4251)

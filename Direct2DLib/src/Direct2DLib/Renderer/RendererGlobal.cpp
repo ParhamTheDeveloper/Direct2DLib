@@ -132,6 +132,26 @@ namespace D2DLib
 		g_Renderer->DrawLine(line, transform);
 	}
 
+	void DrawMesh(const Mesh<MeshType::Rectangle>& mesh)
+	{
+		g_Renderer->DrawMesh(mesh);
+	}
+
+	void DrawMesh(const Mesh<MeshType::Circle>& mesh)
+	{
+		g_Renderer->DrawMesh(mesh);
+	}
+
+	void DrawMesh(const Mesh<MeshType::Triangle>& mesh)
+	{
+		g_Renderer->DrawMesh(mesh);
+	}
+
+	void DrawMesh(const Mesh<MeshType::Custom>& mesh)
+	{
+		g_Renderer->DrawMesh(mesh);
+	}
+
 	void RenderText(
 		const String& text,
 		const TextStyle& style,

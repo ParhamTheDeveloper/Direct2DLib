@@ -15,7 +15,6 @@ namespace D2DLib
 		}
 		Create(style, title);
 		m_Gfx = CreateScoped<Graphics>(m_HWnd);
-		m_Gfx->Init();
 
 		// Determining the size of the window at the window creation time
 		if (m_Style.IsMaximized)
@@ -162,7 +161,7 @@ namespace D2DLib
 
 	void Window::OnTimer(Event& event)
 	{
-		for (auto [timerId, listener] : m_Timers)
+		for (auto& [timerId, listener] : m_Timers)
 		{
 			if (timerId == event.Param)
 			{

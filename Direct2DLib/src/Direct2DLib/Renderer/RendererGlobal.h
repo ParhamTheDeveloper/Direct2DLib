@@ -5,33 +5,33 @@
 namespace D2DLib
 {
 
-	Renderer* InitializeVirtualRenderer();
-	void ShutdownVirtualRenderer();
-	Renderer* GetMainRenderer();
+	D2DLIB_API Renderer* InitializeVirtualRenderer();
+	D2DLIB_API void ShutdownVirtualRenderer();
+	D2DLIB_API Renderer* GetMainRenderer();
 
-	void BeginDraw();
-	void EndDraw();
+	D2DLIB_API void BeginDraw();
+	D2DLIB_API void EndDraw();
 
 	// Backward compatibility for rendering with only shape style
 
-	void ClearScreen(const Color& color = Color());
+	D2DLIB_API void ClearScreen(const Color& color = Color());
 
-	void DrawRectangle(
+	D2DLIB_API void DrawRectangle(
 		const ShapeStyle& rectangle,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
-	void DrawCircle(
+	D2DLIB_API void DrawCircle(
 		const ShapeStyle& circle,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
-	void DrawTriangle(
+	D2DLIB_API void DrawTriangle(
 		const ShapeStyle& triangle,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
-	void DrawTriangle(
+	D2DLIB_API void DrawTriangle(
 		const Vector2& vertexA,
 		const Vector2& vertexB,
 		const Vector2& vertexC,
@@ -39,45 +39,50 @@ namespace D2DLib
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
-	void DrawLine(
+	D2DLIB_API void DrawLine(
 		const ShapeStyle& line,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
 	// Rendering with a specific shape style
 
-	void ClearScreen(
+	D2DLIB_API void ClearScreen(
 		ID2D1Brush* brush,
 		bool immediate = false
 	);
 
-	void DrawRectangle(
+	D2DLIB_API void DrawRectangle(
 		const RectangleStyle& rectangle,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
-	void DrawCircle(
+	D2DLIB_API void DrawCircle(
 		const CircleStyle& circle,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
-	void DrawTriangle(
+	D2DLIB_API void DrawTriangle(
 		const TriangleStyle& triangle,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
-	void DrawLine(
+	D2DLIB_API void DrawLine(
 		const LineStyle& line,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
-	void RenderText(
+	D2DLIB_API void DrawMesh(const Mesh<MeshType::Rectangle>& mesh);
+	D2DLIB_API void DrawMesh(const Mesh<MeshType::Circle>& mesh);
+	D2DLIB_API void DrawMesh(const Mesh<MeshType::Triangle>& mesh);
+	D2DLIB_API void DrawMesh(const Mesh<MeshType::Custom>& mesh);
+
+	D2DLIB_API void RenderText(
 		const String& text,
 		const TextStyle& style,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);
 
-	void RenderTexture(
+	D2DLIB_API void RenderTexture(
 		Texture& texture,
 		const D2D1::Matrix3x2F& transform = D2D1::Matrix3x2F::Identity()
 	);

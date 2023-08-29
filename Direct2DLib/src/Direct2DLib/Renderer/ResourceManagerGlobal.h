@@ -5,21 +5,39 @@
 namespace D2DLib
 {
 
-	void InitializeVirtualResourceManager();
-	void ShutdownVirtualResourceManager();
-	ResourceManager* GetMainResourceManager();
+	D2DLIB_API void InitializeVirtualResourceManager();
+	D2DLIB_API void ShutdownVirtualResourceManager();
+	D2DLIB_API ResourceManager* GetMainResourceManager();
 
-	Resource<ID2D1SolidColorBrush> CreateBrush(const Color& color);
-	Resource<ID2D1LinearGradientBrush> CreateBrush(
+	D2DLIB_API const Brush CreateBrush(const Color& color);
+	D2DLIB_API const Brush CreateLinearGradientBrush(
 		const ShapeStyle& style,
 		const Vector<GradientStop>& stops,
-		float rotation = 0.0f
+		float rotation
 	);
-	Resource<ID2D1RadialGradientBrush> CreateBrush(
+	D2DLIB_API const Brush CreateRadialGradientBrush(
 		const ShapeStyle& style,
 		const Vector<GradientStop>& stops,
 		const Vector2& center,
 		bool centered = false
 	);
+	D2DLIB_API const Brush CreateRadialGradientBrush(
+		const CircleStyle& style,
+		const Vector<GradientStop>& stops,
+		const Vector2& center,
+		bool centered = false
+	);
+	D2DLIB_API const Brush CreateRadialGradientBrush(
+		const ShapeStyle& style,
+		const Vector<GradientStop>& stops,
+		bool centered = true
+	);
+	D2DLIB_API const Brush CreateRadialGradientBrush(
+		const CircleStyle& style,
+		const Vector<GradientStop>& stops,
+		bool centered = true
+	);
+
+	D2DLIB_API inline void ReleaseResource(Resource& resource);
 
 }

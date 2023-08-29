@@ -6,7 +6,7 @@
 namespace D2DLib
 {
 
-	class MouseDownEvent : public Event
+	class D2DLIB_API MouseDownEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(
@@ -25,7 +25,9 @@ namespace D2DLib
 		bool IsRight;
 	};
 
-	class MouseUpEvent : public Event
+	using MouseClickEvent = MouseDownEvent;
+
+	class D2DLIB_API MouseUpEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(
@@ -44,7 +46,7 @@ namespace D2DLib
 		bool IsRight;
 	};
 
-	class MouseMoveEvent : public Event
+	class D2DLIB_API MouseMoveEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(
@@ -63,7 +65,7 @@ namespace D2DLib
 		bool IsRight;
 	};
 
-	class KeyDownEvent : public Event
+	class D2DLIB_API KeyDownEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(
@@ -79,7 +81,7 @@ namespace D2DLib
 		int Character;
 	};
 
-	class KeyUpEvent : public Event
+	class D2DLIB_API KeyUpEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(
@@ -95,7 +97,7 @@ namespace D2DLib
 		int Character;
 	};
 
-	class KeyPressEvent : public Event
+	class D2DLIB_API KeyPressEvent : public Event
 	{
 	public:
 		D2DLIB_DECLARE_EVENT_CTOR(

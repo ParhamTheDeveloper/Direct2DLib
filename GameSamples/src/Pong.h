@@ -187,13 +187,13 @@ private:
 		TextStyle firstPlayerScoreStyle = {
 			100.0f, 0.0f,
 			{(m_GameState.WindowWidth - 50.0f) / 4, 10.0f},
-			nullptr, m_WhiteBrush, Font(24.0f, L"Arial", DWRITE_FONT_WEIGHT_DEMI_BOLD)
+			nullptr, 0.0f, Outline(), m_WhiteBrush, Font(24.0f, L"Arial", DWRITE_FONT_WEIGHT_DEMI_BOLD)
 		};
 		m_Renderer->RenderText(std::to_wstring(m_GameState.FirstPlayerScore), firstPlayerScoreStyle);
 
 		TextStyle secondPlayerScoreStyle = {
 			100.0f, 0.0f, { m_GameState.WindowWidth * 3.0f / 4, 10.0f },
-			nullptr, m_WhiteBrush, Font(24.0f, L"Arial", DWRITE_FONT_WEIGHT_DEMI_BOLD)
+			nullptr, 0.0f, Outline(), m_WhiteBrush, Font(24.0f, L"Arial", DWRITE_FONT_WEIGHT_DEMI_BOLD)
 		};
 		m_Renderer->RenderText(std::to_wstring(m_GameState.SecondPlayerScore), secondPlayerScoreStyle);
 	}

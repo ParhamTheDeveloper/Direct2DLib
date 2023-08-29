@@ -9,61 +9,51 @@
 namespace D2DLib
 {
 
-	class DeltaTime
+	class D2DLIB_API DeltaTime
 	{
 	public:
-		DeltaTime()
-			: m_LastFrameTime(), m_DeltaTime(0.0f)
-		{
-		}
+		DeltaTime();
+		DeltaTime(float deltaTime);
 
-		operator const float& () const
-		{
-			return Calculate();
-		}
-
-		const float& GetDelatTime() const
-		{
-			return Calculate();
-		}
-
-		const float& Calculate() const
-		{
-			const Timestep currentTime;
-			m_DeltaTime = currentTime - m_LastFrameTime;
-			m_LastFrameTime = currentTime;
-			return m_DeltaTime;
-		}
+		const float& Get() const;
+		operator const float& () const;
 	private:
-		mutable Timestep m_LastFrameTime;
-		mutable float m_DeltaTime;
+		void Set(float deltaTime);
+		void operator=(float deltaTime);
+	private:
+		float m_Time;
+		friend class Application;
 	};
 
-	struct ApplicationTime
+	struct D2DLIB_API ApplicationTime
 	{
 		DeltaTime DeltaTime;
 		float ElapsedTime;
 	};
 
-	struct ApplicationWindowInfo
+	struct D2DLIB_API ApplicationWindowInfo
 	{
 		Color BackgroundColor;
 		bool Maximized;
 	};
 
-	class Application
+	class D2DLIB_API Application
 	{
 	public:
 		Application(const String& title, UInt width, UInt height, ApplicationWindowInfo windowInfo = { Color(), false });
 		virtual ~Application();
 		
+		void SetVSync(bool useVSync);
+		bool GetVSync() const;
 		virtual void Run();
 		virtual void InitializeResources();
 		virtual void UninitializeResources();
 		virtual void InitializeEvents();
 	private:
+		void CalculateDeltaTime();
 		void BaseRender();
 		void DispatchRenderEvent();
+		void SynchronizeScreen();
 	protected:
 		template<typename CallbackType, typename This>
 		auto BindEventCallback(CallbackType&& callbackFn, This self)
@@ -80,8 +70,10 @@ namespace D2DLib
 		String m_Title;
 		Window* m_Window;
 		ApplicationTime m_Time;
+		bool m_UseVSync;
 	private:
 		TextStyle m_TextStyle;
+		Timestep m_LastFrameTime;
 	};
 
 }

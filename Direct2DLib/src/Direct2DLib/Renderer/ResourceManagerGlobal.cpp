@@ -13,11 +13,7 @@ namespace D2DLib
 
 	void ShutdownVirtualResourceManager()
 	{
-		if (g_ResourceManager)
-		{
-			delete g_ResourceManager;
-			g_ResourceManager = nullptr;
-		}
+		SafeRelease(g_ResourceManager);
 	}
 
 	ResourceManager* GetMainResourceManager()
@@ -25,28 +21,71 @@ namespace D2DLib
 		return ResourceManager::s_Instance;
 	}
 
-	Resource<ID2D1SolidColorBrush> CreateBrush(const Color& color)
+	const Brush CreateBrush(const Color& color)
 	{
 		return g_ResourceManager->CreateBrush(color);
 	}
 
-	Resource<ID2D1LinearGradientBrush> CreateBrush(
+	const Brush CreateLinearGradientBrush(
 		const ShapeStyle& style,
 		const Vector<GradientStop>& stops,
 		float rotation
 	)
 	{
-		return g_ResourceManager->CreateBrush(style, stops, rotation);
+		return g_ResourceManager->CreateLinearGradientBrush(style, stops, rotation);
 	}
 
-	Resource<ID2D1RadialGradientBrush> CreateBrush(
+	const Brush CreateRadialGradientBrush(
+		const CircleStyle& style,
+		const Vector<GradientStop>& stops,
+		const Vector2& center,
+		bool centered
+	)
+	{
+		return g_ResourceManager->CreateRadialGradientBrush(style, stops, center, centered);
+	}
+
+	const Brush CreateRadialGradientBrush(
+		const CircleStyle& style,
+		const Vector<GradientStop>& stops,
+		bool centered
+	)
+	{
+		return g_ResourceManager->CreateRadialGradientBrush(style, stops, centered);
+	}
+
+	D2DLIB_API void ReleaseResource(Resource& resource)
+	{
+		g_ResourceManager->ReleaseResource(resource);
+	}
+
+	const Brush CreateBrush(
 		const ShapeStyle& style,
 		const Vector<GradientStop>& stops,
 		const Vector2& center,
 		bool centered
 	)
 	{
-		return g_ResourceManager->CreateBrush(style, stops, center, centered);
+		return g_ResourceManager->CreateRadialGradientBrush(style, stops, center, centered);
+	}
+
+	const Brush CreateBrush(
+		const CircleStyle& style,
+		const Vector<GradientStop>& stops,
+		const Vector2& center,
+		bool centered = false
+	)
+	{
+		return g_ResourceManager->CreateRadialGradientBrush(style, stops, center, centered);
+	}
+
+	const Brush CreateBrush(
+		const ShapeStyle& style,
+		const Vector<GradientStop>& stops,
+		bool centered
+	)
+	{
+		return g_ResourceManager->CreateRadialGradientBrush(style, stops, centered);
 	}
 
 }

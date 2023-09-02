@@ -44,7 +44,11 @@ namespace D2DLib
 		virtual ~Application();
 		
 		void SetVSync(bool useVSync);
-		bool GetVSync() const;
+		const bool& GetVSync() const;
+		void SetFrameRate(UInt fps);
+		const UInt& GetFrameRate() const;
+		const UInt GetMaxFrameRate() const;
+
 		virtual void Run();
 		virtual void InitializeResources();
 		virtual void UninitializeResources();
@@ -63,7 +67,7 @@ namespace D2DLib
 	protected:
 		virtual void Render(DeltaTime deltaTime);
 		virtual void OnWindowResize(const WindowResizeEvent& e);
-		float GetFps() const;
+		const UInt GetFps() const;
 		float GetElapsedTime() const;
 		float GetDeltaTime() const;
 	protected:
@@ -71,6 +75,7 @@ namespace D2DLib
 		Window* m_Window;
 		ApplicationTime m_Time;
 		bool m_UseVSync;
+		UInt m_FrameRate;
 	private:
 		TextStyle m_TextStyle;
 		Timestep m_LastFrameTime;

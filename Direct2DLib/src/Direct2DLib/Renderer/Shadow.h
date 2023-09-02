@@ -30,7 +30,7 @@ namespace D2DLib
 
 			const Vector2 sb = (m_VertexB - lightPosition) * lightRadius;
 			const Vector2 eb = m_VertexB + sb;
-			
+
 			DrawTriangle(m_VertexA, ea, eb, m_Style);
 			DrawTriangle(m_VertexA, m_VertexB, eb, m_Style);
 		}

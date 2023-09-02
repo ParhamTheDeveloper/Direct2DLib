@@ -71,7 +71,7 @@ namespace D2DLib
 		return (*this == other);
 	}
 
-	Vector2::operator bool() const
+	Vector2::operator const bool() const
 	{
 		return X != 0.0f && Y != 0.0f;
 	}

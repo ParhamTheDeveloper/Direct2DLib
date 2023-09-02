@@ -191,5 +191,8 @@
     <ClInclude Include="src\Direct2DLib\Core\Brush.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Direct2DLib\Core\StringFormat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

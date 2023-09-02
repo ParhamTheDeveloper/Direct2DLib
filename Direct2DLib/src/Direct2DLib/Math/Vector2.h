@@ -25,7 +25,7 @@ namespace D2DLib
 		Vector2& operator=(const Vector2& other);
 		bool operator==(const Vector2& other) const;
 		bool operator!=(const Vector2& other) const;
-		operator bool() const;
+		operator const bool() const;
 
 		const Vector2 operator+(float scalar) const;
 		const Vector2 operator-(float scalar) const;

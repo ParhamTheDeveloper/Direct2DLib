@@ -427,6 +427,9 @@ namespace D2DLib
 					&pTextLayout
 				);
 
+				pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT(style.VerticalAligment));
+				pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT(style.HorizontalAligment));
+
 				if (SUCCEEDED(hr))
 				{
 					if (style.BackgroundColor)

@@ -16,6 +16,7 @@
 
 #include <d2d1_3.h>
 #include <d2d1effects_2.h>
+#include <dxgi1_6.h>
 #include <dwrite.h>
 #include <wincodec.h>
 

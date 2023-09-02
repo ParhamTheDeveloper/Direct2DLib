@@ -25,12 +25,10 @@ public:
 		for (auto& block : m_Blocks)
 		{
 			block.BackgroundColor.Release();
-			block.Outline.Color.Release();
 		}
 		for (auto& triangle : m_Triangles)
 		{
 			triangle.BackgroundColor.Release();
-			triangle.Outline.Color.Release();
 		}
 	}
 
@@ -39,6 +37,7 @@ public:
 		m_Window->AddListener<MouseMoveEvent>(EventType::MouseMove, BindEventCallback(&GameApplication::OnMouseMove, this));
 		m_Window->AddListener<MouseClickEvent>(EventType::MouseClick, BindEventCallback(&GameApplication::OnClick, this));
 		m_Window->AddListener<KeyPressEvent>(EventType::KeyPress, BindEventCallback(&GameApplication::OnKeyPress, this));
+		m_Window->AddListener<KeyDownEvent>(EventType::KeyDown, BindEventCallback(&GameApplication::OnKeyDown, this));
 	}
 
 	void OnMouseMove(const MouseMoveEvent& e)
@@ -51,37 +50,42 @@ public:
 	{
 		if (e.IsRight)
 		{
+			auto msg = L"Turned {} the light"fmt;
 			m_IsLightOn = !m_IsLightOn;
+			if (m_IsLightOn)
+			{
+				Debug::Info(msg + L"On");
+			}
+			else
+			{
+				Debug::Info(msg + L"Off");
+			}
 			CreateLightTransitions();
 		}
 		else
 		{
-			String msg = L"Added a new shape with the type of [{}] And position of [{}, {}]";
+			auto msg = L"Added a new shape with the type of [{}] And position of [{}, {}]"fmt;
 			switch (m_ShapeType)
 			{
 				case ShapeStyleType::Rectangle:
 					{
-						RectangleStyle blockStyle(25.0f, 25.0f, 0.0f, CreateBrush(Color(60.0f, 45.0f, 50.0f)));
-						blockStyle.Outline = Outline(2.0f, CreateBrush(Color(30.0f, 155.0f, 225.0f)));
+						RectangleStyle blockStyle(50.0f, 50.0f, 0.0f, CreateBrush(Color(60.0f, 45.0f, 50.0f)));
 						Vector2 blockCenter = e.Position - Vector2(blockStyle.Width / 2.0f, blockStyle.Height / 2.0f);
 						blockStyle.Position = blockCenter;
 						m_Blocks.push_back(blockStyle);
-						Debug::Info(std::vformat(msg, std::make_wformat_args(
-							L"Rectangle", blockStyle.Position.X, blockStyle.Position.Y)));
+						Debug::Info(msg.$(L"Rectangle", blockStyle.Position.X, blockStyle.Position.Y));
 					}
 					break;
 
 				case ShapeStyleType::Triangle:
 					{
-						TriangleStyle triangleStyle(25.0f, 25.0f, 0.0f, CreateBrush(Color(60.0f, 45.0f, 50.0f)));
-						triangleStyle.Outline = Outline(2.0f, CreateBrush(Color(30.0f, 155.0f, 225.0f)));
+						TriangleStyle triangleStyle(50.0f, 50.0f, 0.0f, CreateBrush(Color(60.0f, 45.0f, 50.0f)));
 						Vector2 triangleCenter = e.Position - Vector2(triangleStyle.Width / 2.0f, triangleStyle.Height / 2.0f);
 						triangleStyle.VertexA = triangleCenter + Vector2(-triangleStyle.Width / 2.0f, triangleStyle.Height / 2.0f);
 						triangleStyle.VertexB = triangleCenter + Vector2(0.0f, -triangleStyle.Height / 2.0f);
 						triangleStyle.VertexC = triangleCenter + Vector2(triangleStyle.Width / 2.0f, triangleStyle.Height / 2.0f);
 						m_Triangles.push_back(triangleStyle);
-						Debug::Info(std::vformat(msg, std::make_wformat_args(
-							L"Triangle", triangleCenter.X, triangleCenter.Y)));
+						Debug::Info(msg.$(L"Triangle", triangleCenter.X, triangleCenter.Y));
 					}
 					break;
 			}
@@ -90,23 +94,74 @@ public:
 
 	void OnKeyPress(const KeyPressEvent& e)
 	{
-		const String msg = L"Changed the Shape type to {}";
+		auto msg = L"Changed the Shape type to [{}]"fmt;
 		switch (e.Character)
 		{
 			case L'r':
 				{
-					m_ShapeType = ShapeStyleType::Rectangle;
-					Debug::Info(std::vformat(msg, std::make_wformat_args(L"Rectangle")));
+					if (m_ShapeType != ShapeStyleType::Rectangle)
+					{
+						m_ShapeType = ShapeStyleType::Rectangle;
+						Debug::Info(msg + L"Rectangle");
+					}
 				}
 				break;
 
 			case L't':
 				{
-					m_ShapeType = ShapeStyleType::Triangle;
-					Debug::Info(std::vformat(msg, std::make_wformat_args(L"Triangle")));
+					if (m_ShapeType != ShapeStyleType::Triangle)
+					{
+						m_ShapeType = ShapeStyleType::Triangle;
+						Debug::Info(msg + L"Triangle");
+					}
 				}
 				break;
 		}
+	}
+
+	void OnKeyDown(const KeyDownEvent& e)
+	{
+		const Style clientSize = m_Window->GetClientSize();
+		const Vector2 distance(clientSize.Width, clientSize.Height);
+		
+		const float movementTime = 2.0f;
+		static const Vector2 movementSpeed = distance / movementTime;
+		
+		static Vector2 direction;
+		
+		switch (e.Character)
+		{
+			case L'W':
+				{
+					direction.Y = -1;
+					direction.X = 0;
+				}
+				break;
+
+			case L'S':
+				{
+					direction.Y = 1;
+					direction.X = 0;
+				}
+				break;
+
+			case L'A':
+				{
+					direction.X = -1;
+					direction.Y = 0;
+				}
+				break;
+
+			case L'D':
+				{
+					direction.X = 1;
+					direction.Y = 0;
+				}
+				break;
+		}
+
+		m_Camera.Position += direction * movementSpeed * m_Time.DeltaTime;
+		m_Camera.Update();
 	}
 
 	void CreateLightTransitions()
@@ -141,10 +196,11 @@ public:
 	void CreateLightResources()
 	{
 		m_Light.Radius = 150.0f;
-		auto backgroundBrush = CreateRadialGradientBrush(
+		Color firstColor = Color(255.0f, 255.0f, 255.0f, m_LightTransition.GetValue());
+		Brush backgroundBrush = CreateRadialGradientBrush(
 			m_Light,
 			Vector<GradientStop>({
-				GradientStop(0.0f, Color(255.0f, 255.0f, 255.0f, m_LightTransition.GetValue())),
+				GradientStop(0.0f, firstColor),
 				GradientStop(1.0f, Color(255.0f, 255.0f, 255.0f, 0.0f))
 			})
 		);
@@ -156,15 +212,12 @@ public:
 		DrawCircle(m_Light);
 
 		ShapeStyle shadowStyle;
-		shadowStyle.BackgroundColor = CreateBrush(Color(20.0f, 20.0f, 20.0f));
+		shadowStyle.BackgroundColor = CreateBrush(Color(20.0f, 20.0f, 20.0f, m_LightTransition.GetValue()));
 		Light light(m_Light, shadowStyle, true);
 		light.Update(m_Light.Position);
 		
-		if (m_IsLightOn)
-		{
-			light.Look(m_Blocks);
-			light.Look(m_Triangles);
-		}
+		light.Look(m_Blocks);
+		light.Look(m_Triangles);
 
 		DrawShapes();
 		shadowStyle.BackgroundColor.Release();
@@ -192,4 +245,5 @@ private:
 	InterpolatorTransition m_LightTransition = { 0.0f, 255.0f, 0.2f };
 	TransitionManager m_TransitionManager;
 	ShapeStyleType m_ShapeType = ShapeStyleType::Default;
+	Camera m_Camera;
 };

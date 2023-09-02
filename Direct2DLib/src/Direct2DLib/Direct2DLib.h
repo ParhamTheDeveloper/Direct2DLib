@@ -29,6 +29,7 @@ For more information about the author, please visit:
 
 // Entry header file
 
+#include "Direct2DLib/Core/StringFormat.h"
 #include "Core/Application.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/ResourceManager.h"

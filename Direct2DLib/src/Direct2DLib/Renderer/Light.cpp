@@ -65,7 +65,7 @@ namespace D2DLib
             bounds.emplace_back(Boundary(shape.VertexA, shape.VertexB));
             bounds.emplace_back(Boundary(shape.VertexB, shape.VertexC));
             bounds.emplace_back(Boundary(shape.VertexC, shape.VertexA));
-
+            
             for (auto& bound : bounds)
             {
                 boundaries.push_back(bound);

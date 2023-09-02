@@ -75,6 +75,8 @@ namespace D2DLib
 
 	using String = std::wstring;
 	using StringStream = std::wstringstream;
+	using OStream = std::wostream;
+	using IStream = std::wistream;
 	using Thread = std::thread;
 
 	template<typename T>

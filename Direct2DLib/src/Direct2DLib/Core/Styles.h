@@ -209,6 +209,21 @@ namespace D2DLib
 		DWRITE_FONT_STRETCH FontStretch;
 	};
 
+	enum class D2DLIB_API TextVerticalAlignment
+	{
+		Leading,
+		Trailing,
+		Center,
+		Justify
+	};
+
+	enum class D2DLIB_API TextHorizontalAlignment
+	{
+		Near,
+		Far,
+		Center
+	};
+
 	class D2DLIB_API TextStyle : public ShapeStyle
 	{
 	public:
@@ -216,10 +231,14 @@ namespace D2DLib
 			TextStyle,
 			0,
 			const Brush& Color = nullptr,
-			D2DLib::Font font = D2DLib::Font()
+			D2DLib::Font font = D2DLib::Font(),
+			TextVerticalAlignment verticalAligment = TextVerticalAlignment::Leading,
+			TextHorizontalAlignment horizontalAligment = TextHorizontalAlignment::Near
 		)
 			Font(font),
-			Color(Color)
+			Color(Color),
+			VerticalAligment(verticalAligment),
+			HorizontalAligment(horizontalAligment)
 		{
 		}
 
@@ -227,6 +246,8 @@ namespace D2DLib
 	public:
 		Font Font;
 		Brush Color;
+		TextVerticalAlignment VerticalAligment;
+		TextHorizontalAlignment HorizontalAligment;
 	};
 
 }

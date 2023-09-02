@@ -196,6 +196,7 @@
     <ClInclude Include="src\Direct2DLib\Core\Debug.h" />
     <ClInclude Include="src\Direct2DLib\Core\Forwards.h" />
     <ClInclude Include="src\Direct2DLib\Core\Graphics.h" />
+    <ClInclude Include="src\Direct2DLib\Core\StringFormat.h" />
     <ClInclude Include="src\Direct2DLib\Core\Style.h" />
     <ClInclude Include="src\Direct2DLib\Core\Styles.h" />
     <ClInclude Include="src\Direct2DLib\Core\Texture.h" />

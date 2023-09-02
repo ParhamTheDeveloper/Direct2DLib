@@ -29,10 +29,11 @@ namespace D2DLib
 	}
 
 	Application::Application(const String& title, UInt width, UInt height, ApplicationWindowInfo windowInfo)
+		: m_FrameRate(GetMaxFrameRate())
 	{
 		// Debug Console settings
 
-		Debug::Console::SetTitle(L"D2DLib Debug Console [" + title + L"]");
+		Debug::Console::SetTitle(std::vformat(L"D2DLib Debug Console [{}]", std::make_wformat_args(title)));
 		Debug::Console::SetStyle({ 900.0f, 500.0f, { 100.0f, 100.0f } });
 
 		// Window initalization section
@@ -60,7 +61,16 @@ namespace D2DLib
 		m_UseVSync = useVSync;
 	}
 
-	bool Application::GetVSync() const { return m_UseVSync; }
+	const bool& Application::GetVSync() const { return m_UseVSync; }
+
+	void Application::SetFrameRate(UInt fps)
+	{
+		m_FrameRate = fps;
+	}
+
+	const UInt& Application::GetFrameRate() const { return m_FrameRate; }
+
+	const UInt Application::GetMaxFrameRate() const { return 1000; }
 
 	void Application::Run()
 	{
@@ -71,6 +81,7 @@ namespace D2DLib
 		{
 			CalculateDeltaTime();
 			BaseRender();
+			SynchronizeScreen();
 		}
 
 		UninitializeResources();
@@ -112,7 +123,6 @@ namespace D2DLib
 		Render(m_Time.DeltaTime);
 
 		EndDraw();
-		SynchronizeScreen();
 	}
 
 	void Application::DispatchRenderEvent()
@@ -125,7 +135,7 @@ namespace D2DLib
 
 	void Application::SynchronizeScreen()
 	{
-		Sleep(m_UseVSync ? 1000 / GetScreenRefreshRate() : 1);
+		Sleep(m_UseVSync ? 1000 / (GetScreenRefreshRate() * 6) : 1000 / m_FrameRate);
 	}
 
 	void Application::Render(DeltaTime deltaTime)
@@ -138,9 +148,9 @@ namespace D2DLib
 		InitializeResources();
 	}
 
-	float Application::GetFps() const
+	const UInt Application::GetFps() const
 	{
-		return 1.0f / m_Time.DeltaTime;
+		return Cast<UInt>(0.5f + 1.0f / m_Time.DeltaTime);
 	}
 
 	float Application::GetElapsedTime() const

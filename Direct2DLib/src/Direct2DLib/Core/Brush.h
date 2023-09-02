@@ -10,7 +10,7 @@ namespace D2DLib
 	public:
 		Brush() = default;
 
-		Brush(std::nullptr_t)
+		Brush(std::nullptr_t emptyBrush)
 		{
 		}
 
@@ -43,9 +43,6 @@ namespace D2DLib
 		operator const bool () const override { return m_Brush; }
 	private:
 		ID2D1Brush* m_Brush = nullptr;
-		ID2D1SolidColorBrush* m_SolidBrush = nullptr;
-		ID2D1LinearGradientBrush* m_LinearGradientBrush = nullptr;
-		ID2D1RadialGradientBrush* m_RadialGradientBrush = nullptr;
 	};
 
 }

@@ -89,6 +89,26 @@ namespace D2DLib
 		return std::make_pair(std::forward<FirstType>(first), std::forward<SecondType>(second));
 	}
 
+	template<typename T>
+	requires std::is_arithmetic_v<T>
+	const String NumberToString(T number)
+	{
+		return std::to_wstring(number);
+	}
+
+	inline const String RemoveTrailingZeros(String str)
+	{
+		if (str.find(L'0') != String::npos)
+		{
+			str.erase(str.find_last_not_of(L'0') + 1);
+		}
+		if (str.back() == L'.')
+		{
+			str.pop_back();
+		}
+		return str;
+	}
+
 	inline UInt GetRandomNumber(UInt min = 0, UInt max = 0)
 	{
 		static bool isFirst = true;

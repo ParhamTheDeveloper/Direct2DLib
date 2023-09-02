@@ -60,15 +60,15 @@ namespace D2DLib
 
 			if (FAILED(hr))
 			{
-				throw std::runtime_error("Can not create the render target!");
+				throw std::runtime_error("Can not create the Render Target!");
 			}
 
+			hr = m_RenderTarget->QueryInterface(&m_DeviceContext);
+			
 			if (FAILED(hr))
 			{
-				throw std::runtime_error("Can not create the DXGI factory!");
+				throw std::runtime_error("Can not create the Device Context!");
 			}
-
-			m_RenderTarget->QueryInterface(&m_DeviceContext);
 		}
 	}
 

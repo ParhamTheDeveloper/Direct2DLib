@@ -29,8 +29,8 @@ public:
 
 	~Board()
 	{
-		SafeRelease(&m_RowsBrush);
-		SafeRelease(&m_ColsBrush);
+		m_RowsBrush.Release();
+		m_ColsBrush.Release();
 	}
 
 	void Draw()
@@ -61,7 +61,7 @@ private:
 			Size, Size, boardPos, nullptr, 0.0f, { 2.0f, boardOutlineBrush }
 		};
 		DrawRectangle(boardOutlineStyle);
-		SafeRelease(&boardOutlineBrush);
+		boardOutlineBrush.Release();
 	}
 public:
 	float Size;
@@ -132,7 +132,7 @@ public:
 				g_Cols, g_Cols, snakePos + GetBoardPosition(), snakeBrush, 4.0f
 			};
 			DrawRectangle(snakeBodyStyle);
-			SafeRelease(&snakeBrush);
+			snakeBrush.Release();
 		}
 	}
 
@@ -282,7 +282,7 @@ private:
 			windowSize.Width, windowSize.Height, { 0.0f, 0.0f }, rectBrush
 		};
 		DrawRectangle(rectStyle);
-		SafeRelease(&rectBrush);
+		rectBrush.Release();
 
 		m_DialogTextTransition->Update();
 		auto textBrush = CreateBrush({
@@ -297,7 +297,7 @@ private:
 		textStyle.Color = textBrush;
 		textStyle.Font = Font(32.0f, L"Bahnschrift");
 		RenderText(L"Game Over!\nPress space to play again.", textStyle);
-		SafeRelease(&textBrush);
+		textBrush.Release();
 
 		if (Input::Input::Keyboard::IsKeyPressed(VK_SPACE))
 		{

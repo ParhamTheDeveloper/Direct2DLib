@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\pch.cpp">
+    <ClCompile Include="src\Direct2DLibpch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct2DLib\Core\Window.cpp">
@@ -72,9 +72,15 @@
     <ClCompile Include="src\Direct2DLib\Transitions\TransitionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Direct2DLib\Core\DeltaTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Direct2DLib\Core\VSync.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\pch.h">
+    <ClInclude Include="src\Direct2DLibpch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct2DLib\Direct2DLib.h">
@@ -192,6 +198,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct2DLib\Core\StringFormat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Direct2DLib\Core\DeltaTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Direct2DLib\Core\VSync.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

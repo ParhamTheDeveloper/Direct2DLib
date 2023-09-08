@@ -26,7 +26,6 @@ namespace D2DLib
 		}
 
 		operator float() const { return m_Time; }
-
 	private:
 		float m_Time;
 	};

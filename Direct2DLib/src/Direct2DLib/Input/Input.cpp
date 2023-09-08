@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Direct2DLibpch.h"
 #include "Input.h"
 
 namespace D2DLib

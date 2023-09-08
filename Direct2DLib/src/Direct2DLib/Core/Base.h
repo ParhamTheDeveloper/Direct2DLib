@@ -3,7 +3,7 @@
 // Disabling the C4251 warning for STD dll-interfaces
 #pragma warning(disable: 4251)
 
-#include "pch.h"
+#include "Direct2DLibpch.h"
 
 // Core macros
 

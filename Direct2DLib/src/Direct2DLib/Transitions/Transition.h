@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Direct2DLib/Core/Window.h"
+#include "Direct2DLib/Core/DeltaTime.h"
 
 namespace D2DLib
 {
@@ -76,7 +77,7 @@ namespace D2DLib
 			m_IsDone = false;
 			m_Value = m_Start;
 			m_ElapsedTime = 0.0f;
-			m_LastFrameTime = Timestep();
+			m_DeltaTime.Reset();
 			if (m_AutoUpdate)
 			{
 				SetTimer();
@@ -98,15 +99,6 @@ namespace D2DLib
 			}
 		}
 	protected:
-		void ResetFrameTime()
-		{
-			if (m_IsFirst)
-			{
-				m_LastFrameTime = Timestep();
-				m_IsFirst = false;
-			}
-		}
-
 		float SetProgress(float progress)
 		{
 			switch (m_Timing)
@@ -135,7 +127,7 @@ namespace D2DLib
 		}
 	protected:
 		float m_Duration;
-		Timestep m_LastFrameTime;
+		DeltaTime m_DeltaTime;
 		UInt m_TimerId;
 		float m_ElapsedTime;
 		bool m_IsDone, m_AutoUpdate;

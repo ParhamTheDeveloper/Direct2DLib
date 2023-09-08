@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Direct2DLibpch.h"
 
 #include "ColorTransition.h"
 
@@ -24,13 +24,10 @@ namespace D2DLib
 
 	void ColorTransition::Update()
 	{
-		ResetFrameTime();
 		if (!m_IsDone)
 		{
-			Timestep currentTime;
-			float deltaTime = currentTime - m_LastFrameTime;
-			m_ElapsedTime += deltaTime;
-			m_LastFrameTime = currentTime;
+			m_DeltaTime.Tick();
+			m_ElapsedTime += m_DeltaTime;
 
 			float progress = m_ElapsedTime / m_Duration;
 			progress = SetProgress(progress);

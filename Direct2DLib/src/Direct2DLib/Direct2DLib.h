@@ -29,15 +29,20 @@ For more information about the author, please visit:
 
 // Entry header file
 
-#include "Direct2DLib/Core/StringFormat.h"
+#include "Core/Base.h"
 #include "Core/Application.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/ResourceManager.h"
 #include "Transitions/InterpolatorTransition.h"
 #include "Transitions/ColorTransition.h"
 #include "Transitions/TransitionManager.h"
+#include "Direct2DLib/Core/StringFormat.h"
 #include "Renderer/Light.h"
 
 // Enabling the C4251 warning for STD dll-interfaces
 // We reset it when the user includes the client header file (This header file)
-#pragma warning(default: 4251)
+#ifdef D2DLIB_EXPORTS
+	#ifndef D2DLIB_CLIENT_IMPORTS
+		#pragma warning(default: 4251)
+	#endif
+#endif

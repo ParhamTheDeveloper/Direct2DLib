@@ -1,32 +1,9 @@
-#include "pch.h"
+#include "Direct2DLibpch.h"
 #include "Application.h"
+#include "DeltaTime.h"
 
 namespace D2DLib
 {
-
-	DeltaTime::DeltaTime()
-		: m_Time(0.0f)
-	{
-	}
-
-	DeltaTime::DeltaTime(float deltaTime)
-		: m_Time(deltaTime)
-	{
-	}
-
-	void DeltaTime::Set(float deltaTime)
-	{
-		m_Time = deltaTime;
-	}
-
-	const float& DeltaTime::Get() const { return m_Time; }
-
-	DeltaTime::operator const float& () const { return m_Time; }
-
-	void DeltaTime::operator=(float deltaTime)
-	{
-		m_Time = deltaTime;
-	}
 
 	Application::Application(const String& title, UInt width, UInt height, ApplicationWindowInfo windowInfo)
 		: m_FrameRate(GetMaxFrameRate())
@@ -58,7 +35,7 @@ namespace D2DLib
 
 	void Application::SetVSync(bool useVSync)
 	{
-		m_UseVSync = useVSync;
+		GetMainRenderer()->SetVSync(useVSync);
 	}
 
 	const bool& Application::GetVSync() const { return m_UseVSync; }
@@ -70,7 +47,7 @@ namespace D2DLib
 
 	const UInt& Application::GetFrameRate() const { return m_FrameRate; }
 
-	const UInt Application::GetMaxFrameRate() const { return 1000; }
+	const UInt Application::GetMaxFrameRate() const { return 500; }
 
 	void Application::Run()
 	{
@@ -79,11 +56,15 @@ namespace D2DLib
 
 		while (!m_Window->ShouldClose())
 		{
-			CalculateDeltaTime();
+			m_Time.DeltaTime.Tick();
+			InitializeFrameResources();
+
 			BaseRender();
+
+			UninitializeFrameResources();
 			SynchronizeScreen();
 		}
-
+		
 		UninitializeResources();
 	}
 
@@ -103,15 +84,15 @@ namespace D2DLib
 
 	void Application::UninitializeResources()
 	{
-		SafeRelease(&m_TextStyle.Color);
+		m_TextStyle.BackgroundColor.Release();
 	}
 
-	void Application::CalculateDeltaTime()
+	void Application::InitializeFrameResources()
 	{
-		Timestep currentTime;
-		m_Time.DeltaTime = currentTime - m_LastFrameTime;
-		m_Time.ElapsedTime += m_Time.DeltaTime;
-		m_LastFrameTime = currentTime;
+	}
+
+	void Application::UninitializeFrameResources()
+	{
 	}
 
 	void Application::BaseRender()
@@ -123,6 +104,7 @@ namespace D2DLib
 		Render(m_Time.DeltaTime);
 
 		EndDraw();
+
 	}
 
 	void Application::DispatchRenderEvent()
@@ -135,7 +117,7 @@ namespace D2DLib
 
 	void Application::SynchronizeScreen()
 	{
-		Sleep(m_UseVSync ? 1000 / (GetScreenRefreshRate() * 6) : 1000 / m_FrameRate);
+		LimitFrameRate(m_FrameRate);
 	}
 
 	void Application::Render(DeltaTime deltaTime)

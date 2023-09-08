@@ -36,6 +36,12 @@ namespace D2DLib
 			}
 		}
 
+		~Mesh()
+		{
+			SafeRelease(&m_Path);
+			SafeRelease(&m_Sink);
+		}
+
 		void AddLine(const Vector2& point)
 		{
 			if (!m_HasBegun)

@@ -10,7 +10,6 @@ public:
 	GameApplication(const String& title, UInt width, UInt height)
 		: Application(title, width, height)
 	{
-		SetVSync(true);
 	}
 
 	void InitializeResources() override
@@ -34,10 +33,46 @@ public:
 
 	void InitializeEvents() override
 	{
+		m_Window->AddListener<ApplicationRenderEvent>(EventType::ApplicationRender, BindEventCallback(&GameApplication::OnRender, this));
 		m_Window->AddListener<MouseMoveEvent>(EventType::MouseMove, BindEventCallback(&GameApplication::OnMouseMove, this));
 		m_Window->AddListener<MouseClickEvent>(EventType::MouseClick, BindEventCallback(&GameApplication::OnClick, this));
 		m_Window->AddListener<KeyPressEvent>(EventType::KeyPress, BindEventCallback(&GameApplication::OnKeyPress, this));
-		m_Window->AddListener<KeyDownEvent>(EventType::KeyDown, BindEventCallback(&GameApplication::OnKeyDown, this));
+	}
+
+	void OnRender(const ApplicationRenderEvent& e)
+	{
+		const Style clientSize = m_Window->GetClientSize();
+		const Vector2 distance(clientSize.Width, clientSize.Height);
+
+		const float movementTime = 2.0f;
+		static const Vector2 movementSpeed = distance / movementTime;
+
+		static Vector2 direction;
+
+		if (Input::Keyboard::IsKeyPressedAsync(L'W'))
+		{
+			direction.Y = -1;
+			direction.X = 0;
+		}
+		if (Input::Keyboard::IsKeyPressedAsync(L'S'))
+		{
+			direction.Y = 1;
+			direction.X = 0;
+		}
+		if (Input::Keyboard::IsKeyPressedAsync(L'A'))
+		{
+			direction.X = -1;
+			direction.Y = 0;
+		}
+		if (Input::Keyboard::IsKeyPressedAsync(L'D'))
+		{
+			direction.X = 1;
+			direction.Y = 0;
+		}
+
+		m_Camera.Position += direction * movementSpeed * e.DeltaTime;
+		m_Camera.Update();
+		direction = 0.0f;
 	}
 
 	void OnMouseMove(const MouseMoveEvent& e)
@@ -102,7 +137,7 @@ public:
 					if (m_ShapeType != ShapeStyleType::Rectangle)
 					{
 						m_ShapeType = ShapeStyleType::Rectangle;
-						Debug::Info(msg + L"Rectangle");
+						Debug::Success(msg + L"Rectangle");
 					}
 				}
 				break;
@@ -112,56 +147,11 @@ public:
 					if (m_ShapeType != ShapeStyleType::Triangle)
 					{
 						m_ShapeType = ShapeStyleType::Triangle;
-						Debug::Info(msg + L"Triangle");
+						Debug::Success(msg + L"Triangle");
 					}
 				}
 				break;
 		}
-	}
-
-	void OnKeyDown(const KeyDownEvent& e)
-	{
-		const Style clientSize = m_Window->GetClientSize();
-		const Vector2 distance(clientSize.Width, clientSize.Height);
-		
-		const float movementTime = 2.0f;
-		static const Vector2 movementSpeed = distance / movementTime;
-		
-		static Vector2 direction;
-		
-		switch (e.Character)
-		{
-			case L'W':
-				{
-					direction.Y = -1;
-					direction.X = 0;
-				}
-				break;
-
-			case L'S':
-				{
-					direction.Y = 1;
-					direction.X = 0;
-				}
-				break;
-
-			case L'A':
-				{
-					direction.X = -1;
-					direction.Y = 0;
-				}
-				break;
-
-			case L'D':
-				{
-					direction.X = 1;
-					direction.Y = 0;
-				}
-				break;
-		}
-
-		m_Camera.Position += direction * movementSpeed * m_Time.DeltaTime;
-		m_Camera.Update();
 	}
 
 	void CreateLightTransitions()

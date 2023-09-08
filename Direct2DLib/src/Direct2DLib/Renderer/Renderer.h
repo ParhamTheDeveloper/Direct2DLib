@@ -9,7 +9,7 @@
 namespace D2DLib
 {
 
-	class D2DLIB_API Renderer
+	class D2DLIB_API Renderer : public VSync
 	{
 	public:
 		Renderer(Graphics* gfx = nullptr);

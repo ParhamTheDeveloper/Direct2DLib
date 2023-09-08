@@ -20,6 +20,7 @@ namespace D2DLib
 		Log,
 		Info,
 		Error,
+		Fatal,
 		Warning,
 		Success,
 		Progress
@@ -67,6 +68,13 @@ namespace D2DLib
 					}
 					break;
 
+				case DebugLogLevel::Fatal:
+					{
+						textColor = FOREGROUND_RED;
+						levelStr = "Fatal";
+					}
+					break;
+
 				case DebugLogLevel::Warning:
 					{
 						textColor = FOREGROUND_RED | FOREGROUND_GREEN;
@@ -107,6 +115,7 @@ namespace D2DLib
 		D2DLIB_DEBUG_DECLARE_LOG_METHOD(Log)
 		D2DLIB_DEBUG_DECLARE_LOG_METHOD(Info)
 		D2DLIB_DEBUG_DECLARE_LOG_METHOD(Error)
+		D2DLIB_DEBUG_DECLARE_LOG_METHOD(Fatal)
 		D2DLIB_DEBUG_DECLARE_LOG_METHOD(Warning)
 		D2DLIB_DEBUG_DECLARE_LOG_METHOD(Success)
 		D2DLIB_DEBUG_DECLARE_LOG_METHOD(Progress)

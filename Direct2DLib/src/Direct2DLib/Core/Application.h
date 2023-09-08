@@ -2,28 +2,14 @@
 
 #include "Window.h"
 #include "Debug.h"
+#include "DeltaTime.h"
 #include "Direct2DLib/Events/ApplicationEvents.h"
+#include "Direct2DLib/Transitions/TransitionManager.h"
 
 #define D2DLIB_BIND_EVENT_CALLBACK(callback, eventType) [this](const eventType& e) { callback(e); }
 
 namespace D2DLib
 {
-
-	class D2DLIB_API DeltaTime
-	{
-	public:
-		DeltaTime();
-		DeltaTime(float deltaTime);
-
-		const float& Get() const;
-		operator const float& () const;
-	private:
-		void Set(float deltaTime);
-		void operator=(float deltaTime);
-	private:
-		float m_Time;
-		friend class Application;
-	};
 
 	struct D2DLIB_API ApplicationTime
 	{
@@ -52,9 +38,10 @@ namespace D2DLib
 		virtual void Run();
 		virtual void InitializeResources();
 		virtual void UninitializeResources();
+		virtual void InitializeFrameResources();
+		virtual void UninitializeFrameResources();
 		virtual void InitializeEvents();
 	private:
-		void CalculateDeltaTime();
 		void BaseRender();
 		void DispatchRenderEvent();
 		void SynchronizeScreen();
@@ -78,7 +65,6 @@ namespace D2DLib
 		UInt m_FrameRate;
 	private:
 		TextStyle m_TextStyle;
-		Timestep m_LastFrameTime;
 	};
 
 }

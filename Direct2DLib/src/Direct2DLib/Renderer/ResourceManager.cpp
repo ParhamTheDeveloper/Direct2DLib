@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Direct2DLibpch.h"
 #include "ResourceManager.h"
 
 namespace D2DLib

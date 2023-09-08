@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Direct2DLibpch.h"
 #include "Renderer.h"
 
 namespace D2DLib
@@ -10,6 +10,8 @@ namespace D2DLib
 		m_Factory(gfx ? gfx->GetFactory() : GetMainGraphics()->GetFactory()),
 		m_RenderTarget(gfx ? gfx->GetDeviceContext() : GetMainGraphics()->GetDeviceContext())
 	{
+		m_SwapChain = gfx ? gfx->GetSwapChain() : GetMainGraphics()->GetSwapChain();
+		
 		if (!s_Instance)
 		{
 			s_Instance = this;
@@ -33,10 +35,11 @@ namespace D2DLib
 
 	void Renderer::EndDraw()
 	{
+		SyncFrame();
 		m_RenderTarget->EndDraw();
 	}
 
-	// Backward compatibility for rendering with only shape style
+	// Backward compatibility for rendering with only ShapeStyle class
 
 	void Renderer::ClearScreen(const Color& color)
 	{

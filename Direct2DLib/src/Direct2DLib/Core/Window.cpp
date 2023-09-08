@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Direct2DLibpch.h"
 #include "Window.h"
 
 namespace D2DLib
@@ -25,6 +25,7 @@ namespace D2DLib
 		{
 			ShowWindow(m_HWnd, SW_SHOW);
 		}
+
 		InitializeVirtualRenderer();
 		InitializeVirtualResourceManager();
 	}

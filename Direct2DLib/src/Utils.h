@@ -145,6 +145,11 @@ namespace D2DLib
 		return refreshRate;
 	}
 
+	inline void LimitFrameRate(UInt frameRate)
+	{
+		Sleep(1000 / (frameRate * 2));
+	}
+
 	// Transition timing functions
 
 	inline float Lerp(float start, float end, float progress)

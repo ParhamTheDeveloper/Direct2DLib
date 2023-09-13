@@ -1,6 +1,8 @@
 #include "Direct2DLibpch.h"
 #include "Vector2.h"
 
+#include "Math.h"
+
 namespace D2DLib
 {
 
@@ -27,7 +29,7 @@ namespace D2DLib
 
 	void Vector2::Normalize()
 	{
-		float magnitude = std::sqrt(X * X + Y * Y);
+		float magnitude = FastSqrt(X * X + Y * Y);
 
 		if (magnitude)
 		{
@@ -51,7 +53,7 @@ namespace D2DLib
 	float Vector2::Distance(const Vector2& vec1, const Vector2& vec2)
 	{
 		Vector2 distance = vec1 - vec2;
-		return std::sqrt(distance.X * distance.X + distance.Y * distance.Y);
+		return FastSqrt(distance.X * distance.X + distance.Y * distance.Y);
 	}
 
 	Vector2& Vector2::operator=(const Vector2& other)
@@ -68,7 +70,7 @@ namespace D2DLib
 
 	bool Vector2::operator!=(const Vector2& other) const
 	{
-		return (*this == other);
+		return !(*this == other);
 	}
 
 	Vector2::operator const bool() const

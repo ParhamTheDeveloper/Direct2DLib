@@ -14,7 +14,15 @@ namespace D2DLib
 			s_Instance = this;
 		}
 		Create(style, title);
-		m_Gfx = CreateScoped<Graphics>(m_HWnd);
+		
+		try
+		{
+			m_Gfx = CreateScoped<Graphics>(m_HWnd);
+		}
+		catch (const std::exception& err)
+		{
+			MessageBoxA(nullptr, err.what(), "Graphics Error", MB_ICONERROR);
+		}
 
 		// Determining the size of the window at the window creation time
 		if (m_Style.IsMaximized)
@@ -25,6 +33,16 @@ namespace D2DLib
 		{
 			ShowWindow(m_HWnd, SW_SHOW);
 		}
+
+		// We can't use C++'s intrinsic bool type, because BOOL is typedef for int.
+		BOOL isDwmEnabled = true;
+		DwmIsCompositionEnabled(&isDwmEnabled);
+		
+		DWM_PRESENT_PARAMETERS presentParams = { };
+		presentParams.cbSize = sizeof(DWM_PRESENT_PARAMETERS);
+		presentParams.fQueue = true;
+		
+		DwmSetPresentParameters(m_HWnd, &presentParams);
 
 		InitializeVirtualRenderer();
 		InitializeVirtualResourceManager();
@@ -62,6 +80,21 @@ namespace D2DLib
 	{
 		m_Style = style;
 		Update();
+	}
+
+	void Window::SetIcon(const String& filePath)
+	{
+		HANDLE hIcon = LoadImage(nullptr, filePath.c_str(), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
+		if (hIcon) {
+			// Change both icons to the same icon handle.
+			SendMessage(m_HWnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+			SendMessage(m_HWnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+
+			// This will ensure that the application icon gets changed too.
+			SendMessage(m_HWnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+			SendMessage(m_HWnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+		}
+		DeleteObject(hIcon);
 	}
 
 	const Style Window::GetClientSize()

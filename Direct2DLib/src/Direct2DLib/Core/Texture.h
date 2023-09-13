@@ -16,14 +16,16 @@ namespace D2DLib
 		const RectangleStyle& GetStyle() const { return m_Style; }
 		const RectangleStyle& GetLoadedTextureStyle() const { return m_LoadedBitmapSize; }
 		const String& GetFilePath() const { return m_FilePath; }
+		HBITMAP GetBitmapHandle() const { return m_HBitmap; };
 		ID2D1BitmapBrush* GetBrush();
 		const RectangleStyle GetBrushStyle();
 		void SetStyle(const RectangleStyle& style);
 	private:
+		ID2D1DeviceContext6* m_RenderTarget = nullptr;
 		IWICImagingFactory* m_WICImagingFactory = nullptr;
 		ID2D1Bitmap* m_Bitmap = nullptr;
+		HBITMAP m_HBitmap = nullptr;
 		String m_FilePath;
-		ID2D1DeviceContext6* m_RenderTarget = nullptr;
 		RectangleStyle m_Style;
 		RectangleStyle m_LoadedBitmapSize;
 	};

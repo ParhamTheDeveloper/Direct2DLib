@@ -13,7 +13,7 @@ namespace D2DLib
 	{
 		if (m_VSync)
 		{
-			m_SwapChain->Present(1, 0);
+			// m_SwapChain->Present(1, 0);
 		}
 	}
 

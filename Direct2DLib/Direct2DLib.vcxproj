@@ -175,7 +175,6 @@
     <ClCompile Include="src\Direct2DLib\Math\Vector2.cpp" />
     <ClCompile Include="src\Direct2DLib\Renderer\Camera.cpp" />
     <ClCompile Include="src\Direct2DLib\Renderer\Light.cpp" />
-    <ClCompile Include="src\Direct2DLib\Renderer\Ray.cpp" />
     <ClCompile Include="src\Direct2DLib\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Direct2DLib\Renderer\RendererGlobal.cpp" />
     <ClCompile Include="src\Direct2DLib\Renderer\ResourceManager.cpp" />
@@ -224,7 +223,6 @@
     <ClInclude Include="src\Direct2DLib\Renderer\Camera.h" />
     <ClInclude Include="src\Direct2DLib\Renderer\Light.h" />
     <ClInclude Include="src\Direct2DLib\Renderer\Mesh.h" />
-    <ClInclude Include="src\Direct2DLib\Renderer\Ray.h" />
     <ClInclude Include="src\Direct2DLib\Renderer\Renderer.h" />
     <ClInclude Include="src\Direct2DLib\Renderer\RendererGlobal.h" />
     <ClInclude Include="src\Direct2DLib\Core\Resource.h" />

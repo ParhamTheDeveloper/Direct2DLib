@@ -11,24 +11,30 @@
 #endif
 
 #include <Windows.h>
+#include <dwmapi.h>
 
 // Direct2D header files
 
 #include <d2d1_3.h>
 #include <d2d1effects_2.h>
-#include <dxgi1_6.h>
+#include <d2d1effectauthor.h>  
+#include <d2d1effecthelpers.h>
 #include <dwrite.h>
 #include <wincodec.h>
 
 // DirectX header files
 
 #include <d3d11.h>
+#include <d3dcompiler.h>
+#include <dxgi1_6.h>
 
 #pragma comment(lib, "Winmm.lib")
-#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dwmapi.lib")
 #pragma comment(lib, "d3d11.lib")
-#pragma comment(lib, "dxguid.lib")
+#pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxgi.lib")
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "Windowscodecs.lib")
 

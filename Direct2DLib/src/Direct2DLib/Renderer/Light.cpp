@@ -13,20 +13,13 @@ namespace D2DLib
         ShadowStyle(shadowStyle),
         NoShadowLimitation(noShadowLimitation)
     {
-        Vector2 position = m_Style.Position + m_Style.Radius;
-        m_Rays.reserve(360);
-        for (float i = 0; i < 360; i += 1.0f)
-        {
-            m_Rays.emplace_back(position, DegreesToRadians(i));
-        }
     }
 
     void Light::Update(const Vector2& position)
     {
-        m_Style.Position = position;
-        for (Ray& ray : m_Rays)
+        if (m_Style.Position != position)
         {
-            ray.Position = position + m_Style.Radius;
+            m_Style.Position = position;
         }
     }
 
@@ -39,18 +32,19 @@ namespace D2DLib
             bounds.reserve(4);
 
             const Vector2 pos = shape.Position;
-            bounds.emplace_back(Boundary(pos, pos + Vector2(0.0f, shape.Height)));
+            bounds.emplace_back(Boundary(pos, pos + Vector2(0.0f, shape.Height))); // left side
             bounds.emplace_back(Boundary(pos + Vector2(shape.Width, 0.0f),
-                pos + Vector2(shape.Width, shape.Height)));
-            bounds.emplace_back(Boundary(pos, pos + Vector2(shape.Width, 0.0f)));
-            bounds.emplace_back(Boundary(pos + Vector2(shape.Height, 0.0f),
-                pos + Vector2(shape.Width, shape.Height)));
+                pos + Vector2(shape.Width, shape.Height))); // right side
+            bounds.emplace_back(Boundary(pos, pos + Vector2(shape.Width, 0.0f))); // top
+            bounds.emplace_back(Boundary(pos + Vector2(0.0f, shape.Height),
+                pos + Vector2(shape.Width, shape.Height))); // bottom
 
             for (auto& bound : bounds)
             {
                 boundaries.push_back(bound);
             }
         }
+
         return boundaries;
     }
 

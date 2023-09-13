@@ -46,8 +46,12 @@ namespace D2DLib
 			{
 				if (transition->IsDone())
 				{
-					auto it = std::find(transitions.begin(), transitions.end(), transition);
-					transitions.erase(it);
+					if (m_CanRemoveWhenDone)
+					{
+						auto it = std::find(transitions.begin(), transitions.end(), transition);
+						transitions.erase(it);
+					}
+					continue;
 				}
 				transition->Update();
 			}

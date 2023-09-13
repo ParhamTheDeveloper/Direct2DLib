@@ -23,14 +23,24 @@ namespace D2DLib
 		IDXGISwapChain* GetSwapChain() const { return m_DXGISwapChain; }
 	private:
 		HWND m_HWnd;
+
+		// Direct3D members
+		
+		ID3D11Device* m_D3DDevice;
+		ID3D11DeviceContext* m_D3DDeviceContext;
+		
+		// DXGI members
+
+		IDXGIFactory* m_DXGIFactory = nullptr;
+		IDXGISwapChain* m_DXGISwapChain = nullptr;
+
+		// Direct2D members
+
 		ID2D1HwndRenderTarget* m_RenderTarget = nullptr;
 		ID2D1Factory7* m_Factory = nullptr;
 		ID2D1DeviceContext6* m_DeviceContext = nullptr;
 		ID2D1Device* m_Device = nullptr;
-		IDXGIFactory* m_DXGIFactory = nullptr;
-		IDXGISwapChain* m_DXGISwapChain = nullptr;
-		ID3D11Device* m_D3DDevice;
-		ID3D11DeviceContext* m_D3DDeviceContext;
+
 		static Graphics* s_Instance;
 	private:
 		friend D2DLIB_API Graphics* GetMainGraphics();

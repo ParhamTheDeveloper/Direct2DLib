@@ -38,7 +38,7 @@ namespace D2DLib
 		Vector2 Position, Scale;
 		float Rotation;
 	private:
-		ID2D1HwndRenderTarget* m_RenderTarget = nullptr;
+		ID2D1DeviceContext* m_RenderTarget = nullptr;
 		static Camera* s_Instance;
 	private:
 		friend D2DLIB_API Camera* GetMainCamera();

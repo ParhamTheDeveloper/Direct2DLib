@@ -31,6 +31,7 @@ namespace D2DLib
 		bool ShouldClose();
 		void Update();
 		void SetStyle(const WindowStyle& style);
+		void SetIcon(const String& filePath);
 
 		const WindowStyle& GetStyle() const { return m_Style; }
 		const wchar_t* GetWindowClassName() const { return L"D2DLib Window"; }

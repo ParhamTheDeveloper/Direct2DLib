@@ -60,9 +60,6 @@
     <ClCompile Include="src\Direct2DLib\Renderer\RendererGlobal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Direct2DLib\Renderer\Ray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Direct2DLib\Renderer\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -174,9 +171,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct2DLib\Renderer\Shadow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Direct2DLib\Renderer\Ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct2DLib\Renderer\Light.h">

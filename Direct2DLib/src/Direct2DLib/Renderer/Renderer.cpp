@@ -35,8 +35,8 @@ namespace D2DLib
 
 	void Renderer::EndDraw()
 	{
-		SyncFrame();
 		m_RenderTarget->EndDraw();
+		SyncFrame();
 	}
 
 	// Backward compatibility for rendering with only ShapeStyle class
@@ -60,6 +60,7 @@ namespace D2DLib
 				rectangle.Width + rectangle.Position.X + rectangle.Outline.Width / 2,
 				rectangle.Height + rectangle.Position.Y + rectangle.Outline.Width / 2
 			);
+			
 			if (rectangle.BorderRadius)
 			{
 				D2D1_ROUNDED_RECT roundedRect = D2D1::RoundedRect(
@@ -224,6 +225,7 @@ namespace D2DLib
 			{
 				ID2D1GeometrySink* pSink = nullptr;
 				hr = pPathGeometry->Open(&pSink);
+				
 				if (SUCCEEDED(hr))
 				{
 					const float outlineWidth = style.Outline.Width;

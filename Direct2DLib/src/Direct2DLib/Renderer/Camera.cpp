@@ -9,7 +9,7 @@ namespace D2DLib
 		Position(),
 		Scale({ 1.0f, 1.0f }),
 		Rotation(0.0f),
-		m_RenderTarget(gfx ? gfx->GetRenderTarget() : GetMainGraphics()->GetRenderTarget())
+		m_RenderTarget(gfx ? gfx->GetDeviceContext() : GetMainGraphics()->GetDeviceContext())
 	{
 		if (!s_Instance)
 		{
@@ -27,7 +27,7 @@ namespace D2DLib
 		Position(position),
 		Scale(scale),
 		Rotation(rotation),
-		m_RenderTarget(gfx ? gfx->GetRenderTarget() : GetMainGraphics()->GetRenderTarget())
+		m_RenderTarget(gfx ? gfx->GetDeviceContext() : GetMainGraphics()->GetDeviceContext())
 	{
 		if (!s_Instance)
 		{
@@ -45,7 +45,7 @@ namespace D2DLib
 		Position(position),
 		Scale({ scale, scale }),
 		Rotation(rotation),
-		m_RenderTarget(gfx ? gfx->GetRenderTarget() : GetMainGraphics()->GetRenderTarget())
+		m_RenderTarget(gfx ? gfx->GetDeviceContext() : GetMainGraphics()->GetDeviceContext())
 	{
 		if (!s_Instance)
 		{

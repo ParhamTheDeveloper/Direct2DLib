@@ -52,6 +52,14 @@ namespace D2DLib
 						{
 							hr = m_RenderTarget->CreateBitmapFromWicBitmap(pFormatConverter, &m_Bitmap);
 							
+							UInt width = 0, height = 0;
+							pFormatConverter->GetSize(&width, &height);
+
+							Vector<unsigned char> buffer(width * height * 4);
+							pFormatConverter->CopyPixels(0, width * 4, Cast<UInt>(buffer.size()), buffer.data());
+
+							m_HBitmap = CreateBitmap(width, height, 1, 32, buffer.data());
+
 							if (SUCCEEDED(hr))
 							{
 								UInt bitmapWidth, bitmapHeight;
@@ -70,7 +78,9 @@ namespace D2DLib
 
 	Texture::~Texture()
 	{
+		SafeRelease(&m_WICImagingFactory);
 		SafeRelease(&m_Bitmap);
+		DeleteObject(m_HBitmap);
 	}
 
 	ID2D1BitmapBrush* Texture::GetBrush()

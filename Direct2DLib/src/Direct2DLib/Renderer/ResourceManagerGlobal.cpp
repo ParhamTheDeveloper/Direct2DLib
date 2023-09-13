@@ -36,7 +36,7 @@ namespace D2DLib
 	}
 
 	const Brush CreateRadialGradientBrush(
-		const CircleStyle& style,
+		const ShapeStyle& style,
 		const Vector<GradientStop>& stops,
 		const Vector2& center,
 		bool centered
@@ -48,13 +48,32 @@ namespace D2DLib
 	const Brush CreateRadialGradientBrush(
 		const CircleStyle& style,
 		const Vector<GradientStop>& stops,
+		const Vector2& center,
+		bool centered
+	)
+	{
+		return g_ResourceManager->CreateRadialGradientBrush(style, stops, center, centered);
+	}
+
+	const Brush CreateRadialGradientBrush(
+		const ShapeStyle& style,
+		const Vector<GradientStop>& stops,
 		bool centered
 	)
 	{
 		return g_ResourceManager->CreateRadialGradientBrush(style, stops, centered);
 	}
 
-	D2DLIB_API void ReleaseResource(Resource& resource)
+	const Brush CreateRadialGradientBrush(
+		const CircleStyle& style,
+		const Vector<GradientStop>& stops,
+		bool centered
+	)
+	{
+		return g_ResourceManager->CreateRadialGradientBrush(style, stops, centered);
+	}
+
+	void ReleaseResource(Resource& resource)
 	{
 		g_ResourceManager->ReleaseResource(resource);
 	}
